@@ -1,22 +1,17 @@
 import React from 'react'
+import CardEstudar from './CardEstudar'
+import EmBreve from './EmBreve'
 import styles from './MenuOptions.module.css'
 
 const MenuOptions = () => {
   return (
     <section className={styles.bg}>
         <div className={styles.grid + ' container'}>
-            <div className={styles.estudo}>
-                <h1>Comece agora</h1>
-            </div>
-            <div className={styles.emBreve}>
-                <h1>Em breve</h1>
-            </div>
-            <div className={styles.emBreve2}>
-            <h1>Em breve</h1>
-            </div>
-            <div className={styles.emBreve3}>
-            <h1>Em breve</h1>
-            </div>
+            <CardEstudar classe={styles.estudo}/>
+            <EmBreve classe={styles.emBreve}/>
+            <EmBreve classe={styles.emBreve2}/>
+            <EmBreve classe={styles.emBreve3}/>
+            
         </div>
     </section>
   )
