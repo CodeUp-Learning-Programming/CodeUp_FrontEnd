@@ -6,13 +6,15 @@
 
 .nav{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 30px;
     margin-bottom: 20px;
+    padding: 0;
 }
 
 .link{
     align-self: flex-start;
+    
 }
 
 .link::before{
@@ -73,6 +75,5 @@
 }
 
 .date{
-    min-width: 240px;
     font-size: 0.8rem;
 }

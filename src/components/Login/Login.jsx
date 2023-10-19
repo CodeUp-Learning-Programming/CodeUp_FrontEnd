@@ -77,6 +77,7 @@ const Login = () => {
           Voltar
         </Link>
         <img className={styles.logo} src={logo} alt="Logo CodeUp" />
+        <span></span>
       </nav>
 
       <section className={styles.container + " " + styles.containerLogin}>

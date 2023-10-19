@@ -1,6 +1,12 @@
 .div{
     color: white;
     background-color: black;
+    padding: 31px;
+    padding-right: 100px;
+    background: linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0)) padding-box, linear-gradient(90deg, rgba(0, 226, 242, 1) 0%, rgba(0, 127, 251, 1) 100%) border-box;
+    border: 1px solid transparent;
+    
+    
 }
 
 .subtitulo{
@@ -9,8 +15,11 @@
     -webkit-text-fill-color: transparent;
     font-weight: 600;
     display: inline;
+    font-size: 0.875rem;
 }
 
 .titulo{
     font-weight: 600;
+    padding-top: 12px;
+    font-size: 2rem;
 }

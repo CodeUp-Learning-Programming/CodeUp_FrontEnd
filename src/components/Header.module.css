@@ -7,11 +7,21 @@
     justify-content: space-between;
     align-items: center;
     color: white;
-    padding: 5px;
+    padding: 5px 0;
+}
+
+.logo{
+    width: 7%;
 }
 
 .nav{
     display: flex;
     gap: 40px;
+    align-items: center;
+}
+
+.p{
+    font-size: 0.875rem;
     font-weight: 600;
+    
 }
