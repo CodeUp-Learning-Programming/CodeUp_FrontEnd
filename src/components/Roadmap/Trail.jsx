@@ -16,6 +16,10 @@ const Trail = () => {
         <Card titulo="O Começo" subtitulo="Aprenda"/>
         <Card titulo="O Começo" subtitulo="Aprenda"/>
         <Card titulo="O Começo" subtitulo="Aprenda"/>
+        <div className={styles.barra}>
+      </div>
+      
+
       </div>
     </div>
   </section>
