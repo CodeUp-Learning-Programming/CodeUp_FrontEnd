@@ -51,7 +51,7 @@ const Login = () => {
       email,
       senha,
       nome,
-      dataNasc,
+      "dtNascimento":dataNasc,
     };
 
     api.post('/usuarios/cadastrar', corpoRequisicao, {

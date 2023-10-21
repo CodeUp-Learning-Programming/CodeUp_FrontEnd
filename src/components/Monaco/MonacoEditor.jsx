@@ -11,7 +11,10 @@ import './monaco.css';
 function MonacoEditor() {
   const [data, setData] = useState([]);
   const monaco = useMonaco();
-  const [conteudoMonaco, setConteudoMonaco] = useState('function{\n}');
+  const [conteudoTeorico, setConteudoTeorico] = useState('');
+  const [desafio, setDesafio] = useState('');
+  const [instrucao, setInstrucao] = useState('');
+  const [layoutFuncao, setLayoutFuncao] = useState('function exercicio1() {\n /* Implemente aqui */ \n}');
   const [theme, setTheme] = useState('vs-dark'); // Initialize with vs-dark theme
   const [errorMessages, setErrorMessages] = useState([]);
   const [consoleMessages, setConsoleMessages] = useState([]);
@@ -38,7 +41,7 @@ function MonacoEditor() {
       console.log(respostaObtida.data);
       // vendo os dados da resposta (data: []);
 
-      setConteudoMonaco(respostaObtida.data.conteudo_exec)
+      setLayoutFuncao(respostaObtida.data.conteudo_exec)
       setData(respostaObtida.data)
       // setando "musicas" com os mesmos dados recebidos pela resposta da requisição;
       })
@@ -152,7 +155,6 @@ function MonacoEditor() {
       
       <button className='botao' onClick={validar}>Verificar</button>
       <button className='botao' onClick={handleSave}>Salvar</button>
-      <button className='botao' onClick={login}>Login</button>
       <button className='botao' onClick={buscarFase}>Buscar fase</button>
 
       <span className='monacoContainer'>
@@ -163,8 +165,8 @@ function MonacoEditor() {
             width='50vw'
             theme={theme}
             defaultLanguage='javascript'
-            value={conteudoMonaco}
-            onChange={(textoDigitado) => setConteudoMonaco(textoDigitado)}
+            value={layoutFuncao}
+            onChange={(textoDigitado) => setLayoutFuncao(textoDigitado)}
             onValidate={handleEditorValidation}
           />
         </div>
