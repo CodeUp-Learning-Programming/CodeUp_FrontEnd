@@ -13,9 +13,12 @@ const Trail = () => {
         <span className={styles.span}></span>
       </div>
       <div className={styles.containerCards}>
-        <Card titulo="O Começo" subtitulo="Aprenda"/>
-        <Card titulo="O Começo" subtitulo="Aprenda"/>
-        <Card titulo="O Começo" subtitulo="Aprenda"/>
+        <Link to="/terminal">
+          <Card titulo="O Começo" subtitulo="Aprenda" status="on"/>
+        </Link>
+        
+        <Card titulo="O Começo" subtitulo="Aprenda" />
+        <Card titulo="O Começo" subtitulo="Aprenda" />
         <div className={styles.barra}>
       </div>
       

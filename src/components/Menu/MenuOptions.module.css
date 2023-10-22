@@ -16,6 +16,12 @@
 .estudo{
     text-align: center;
     grid-area: estudo;
+    display: block;
+}
+
+.estudo2{
+    height: 100%;
+    
 }
 
 .emBreve{
