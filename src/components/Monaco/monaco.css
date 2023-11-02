@@ -1,23 +1,42 @@
 .monacoContainer{
-display: flex;
+    display: flex;
+    flex-direction: column;
+    background-color: #101010;
 }
-.monaco{
-    width: 50vw;
-    height: 100vh;
+/* .monaco{
+    width: 20vw;
+    height: 10vh;
+} */
+.titulo{
+    display: inline;
+    background-color: #1E1e1e;
+    color: #FFB800;
+    padding:  0px 20px 1px 20px;
+    
 }
+
+.titulo span{
+    font-weight: 600;
+    
+}
+
 .console{
     width: 50vw;
-    height: 100vh;
-    background-color: #111111;
+    height: calc(31vh - 64px);
+    background-color: #101010;
     color: #FFF;
 }
 
 .botao{
-    width: 120px;
+    align-self: flex-end;
+    min-width: 120px;
     height: 40px;
+    margin-right: 20px;
+    margin-bottom: 20px;
     border: 1px solid #FFF;
     background-color: #000000;
     cursor: pointer;
     color: #FFF;
     font-size: 16px;
 }
+

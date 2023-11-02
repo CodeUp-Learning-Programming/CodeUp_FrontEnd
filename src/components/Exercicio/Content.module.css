@@ -1,0 +1,28 @@
+.container{
+  padding: 20px 20px;
+  color: white;
+  background-color: #101010;
+}
+
+.containerTitulo{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  color: white;
+  font-weight: 600;
+}
+
+.titulo{
+  color: #01A8F8;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.divisoria{
+  display: block;
+  height: 2px;
+  background-color: white;
+  margin: 10px 0;
+}
+

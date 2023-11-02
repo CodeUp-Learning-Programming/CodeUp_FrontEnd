@@ -13,7 +13,7 @@ const Trail = () => {
         <span className={styles.span}></span>
       </div>
       <div className={styles.containerCards}>
-        <Link to="/terminal">
+        <Link to="/exercicio">
           <Card titulo="O Começo" subtitulo="Aprenda" status="on"/>
         </Link>
         

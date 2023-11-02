@@ -5,6 +5,7 @@ import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Menu from "./components/Menu/Menu";
 import Roadmap from "./components/Roadmap/Roadmap";
+import Exercicio from "./components/Exercicio/Exercicio";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/menu" element={<Menu />}/>
           <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/terminal" element={<Monaco />} />
+          <Route path="/exercicio" element={<Exercicio/>}/>
         </Routes>
       </BrowserRouter>
     </>

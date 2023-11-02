@@ -8,7 +8,7 @@ import Monokai from './themes/Monokai.json';
 
 import './monaco.css';
 
-function MonacoEditor() {
+function MonacoEditor({classe}) {
   const [data, setData] = useState([]);
   const monaco = useMonaco();
   const [conteudoTeorico, setConteudoTeorico] = useState('');
@@ -128,8 +128,6 @@ function MonacoEditor() {
 
   };
 
- 
-  
   const selecionarFase = (event) =>{
     var faseSelecionada = event.target.value;
     sessionStorage.setItem("faseSelecionada", faseSelecionada)
@@ -137,8 +135,8 @@ function MonacoEditor() {
 
 
   return (
-    <div>
-      <select id='selectTemas' onChange={handleThemeChange} >
+    <div className={classe}>
+      {/* <select id='selectTemas' onChange={handleThemeChange} >
         <option value='0'>Visual Studio</option>
         <option value='1'>Visual Studio Dark</option>
         <option value='2'>High Contrast Black</option>
@@ -151,20 +149,21 @@ function MonacoEditor() {
         <option value='2'>Subtração</option>
         <option value='3'>Multiplicação</option>
         <option value='4'>Divisão</option>
-      </select>
+      </select> */}
       
-      <button className='botao' onClick={validar}>Verificar</button>
+      {/* <button className='botao' onClick={validar}>Verificar</button>
       <button className='botao' onClick={handleSave}>Salvar</button>
-      <button className='botao' onClick={buscarFase}>Buscar fase</button>
+      <button className='botao' onClick={buscarFase}>Buscar fase</button> */}
 
       <span className='monacoContainer'>
-
         <div className='monaco'>
+          <span className='titulo'><span>JS</span> JavaScript</span>
           <Monaco
-            height='100vh'
+            height='60vh'
             width='50vw'
             theme={theme}
             defaultLanguage='javascript'
+            
             value={layoutFuncao}
             onChange={(textoDigitado) => setLayoutFuncao(textoDigitado)}
             onValidate={handleEditorValidation}
@@ -172,19 +171,29 @@ function MonacoEditor() {
         </div>
 
         <div id='console' className='console'>
+        
+        <div>
+          
+        
         {consoleMessages}
+        
       {/* Exibe mensagens de erro */}
+      
       {errorMessages.length > 0 && (
         <div>
           <h2>Mensagens de Erro:</h2>
+          
           <ul>
             {errorMessages.map((message, index) => (
               <li key={index}>{message}</li>
             ))}
           </ul>
+          
         </div>
-      )}
+      )}</div>
+        
         </div>
+        <button className='botao' onClick={validar}>Verificar</button>
       </span>
 
 
