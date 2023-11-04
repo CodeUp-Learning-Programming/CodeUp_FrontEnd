@@ -1,6 +1,5 @@
 import Monaco, { useMonaco } from '@monaco-editor/react';
 import { useState, useRef, useEffect } from 'react';
-import api from '../../api'
 
 import Amy from './themes/Amy.json';
 import MonokaiBrightTheme from './themes/Monokai Bright.json';
@@ -21,34 +20,34 @@ function MonacoEditor({classe}) {
 
   
 
-    function buscarFase() {
+    // function buscarFase() {
 
-      const config = {
-        method: 'GET',
-        url: `/fases/${sessionStorage.faseSelecionada}`,
-        headers: {
-          'Authorization': `Bearer ${sessionStorage.tokenBearer}` // Aqui, adicionamos o token Bearer ao cabeçalho Authorization
-        }
-      };
+    //   const config = {
+    //     method: 'GET',
+    //     url: `/fases/${sessionStorage.faseSelecionada}`,
+    //     headers: {
+    //       'Authorization': `Bearer ${sessionStorage.tokenBearer}` // Aqui, adicionamos o token Bearer ao cabeçalho Authorization
+    //     }
+    //   };
   
-      api(config)
-      .then((respostaObtida) => {
-      // cairá aqui se a requisição for realizada;
-      console.log(respostaObtida);
-      // objeto que representa a resposta enviada pela API;
-      console.log(respostaObtida.status);
-      // vendo status da resposta (OK - 200);
-      console.log(respostaObtida.data);
-      // vendo os dados da resposta (data: []);
+    //   api(config)
+    //   .then((respostaObtida) => {
+    //   // cairá aqui se a requisição for realizada;
+    //   console.log(respostaObtida);
+    //   // objeto que representa a resposta enviada pela API;
+    //   console.log(respostaObtida.status);
+    //   // vendo status da resposta (OK - 200);
+    //   console.log(respostaObtida.data);
+    //   // vendo os dados da resposta (data: []);
 
-      setLayoutFuncao(respostaObtida.data.conteudo_exec)
-      setData(respostaObtida.data)
-      // setando "musicas" com os mesmos dados recebidos pela resposta da requisição;
-      })
-      .catch((erroOcorrido) => { // cairá aqui se houver algum erro durante a requisição
-      console.log(erroOcorrido);
-      })
-      }
+    //   setLayoutFuncao(respostaObtida.data.conteudo_exec)
+    //   setData(respostaObtida.data)
+    //   // setando "musicas" com os mesmos dados recebidos pela resposta da requisição;
+    //   })
+    //   .catch((erroOcorrido) => { // cairá aqui se houver algum erro durante a requisição
+    //   console.log(erroOcorrido);
+    //   })
+    //   }
 
   const editorRef = useRef(null);
 

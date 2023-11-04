@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import api from "../../api";
+import { Link, useNavigate  } from "react-router-dom";
+import { USER_CADASTRO, USER_LOGIN } from "../../api";
 import logo from "../../assets/Codeup-big.png";
 import Button from "../Button";
 import Input from "../Input";
@@ -21,53 +21,42 @@ const Login = () => {
     setLoginCadastro(!loginCadastro)
   }
 
+  const navigate = useNavigate();
 
-  function login() {
-
-    const corpoRequisicao = {
+  async function login() {
+    
+    const{url,options} = USER_LOGIN ({
       email,
-      senha,
-    };
-
-    api.post('/usuarios/login', corpoRequisicao, {
-      headers: {
-        'Content-Type': 'application/json', // Define o tipo de conteúdo como JSON
-      },
+      senha
     })
-    .then((resposta) => {
-        // Lida com a resposta da API aqui
-        console.log("Logou com sucesso");
-        console.log(resposta);
-        sessionStorage.setItem('tokenBearer', resposta.data.token);
-          })
-    .catch((erro) => {
-      console.log("Usuário ou senha inválidos");
-    });
+
+    const response = await fetch(url, options);
+    if(response.ok){
+      console.log(response)
+      const data = await response.json();
+      sessionStorage.setItem('id', data.id); 
+      sessionStorage.setItem('nome', data.nome); 
+      sessionStorage.setItem('email', data.email); 
+      sessionStorage.setItem('tokenBearer', data.token); 
+      setTimeout(() => {
+        navigate('/menu');
+      }, 1000);
+    }
+    
   }
-
-  function cadastrar() {
-
-    const corpoRequisicao = {
+  async function cadastrar() {
+    const{url,options} = USER_CADASTRO ({
       email,
       senha,
       nome,
-      "dtNascimento":dataNasc,
-    };
-
-    api.post('/usuarios/cadastrar', corpoRequisicao, {
-      headers: {
-        'Content-Type': 'application/json', // Define o tipo de conteúdo como JSON
-      },
+      "dtNascimento":dataNasc
     })
-    .then((resposta) => {
-        // Lida com a resposta da API aqui
-        console.log("Cadastro realizado com sucesso!");
-        console.log(resposta);
-        sessionStorage.setItem('tokenBearer', resposta.data.token);
-          })
-    .catch((erro) => {
-      console.log("Usuário ou senha inválidos");
-    });
+
+    const response = await fetch(url, options);
+    if(response.ok){
+      login()
+      console.log(response)
+    }
   }
 
   return (

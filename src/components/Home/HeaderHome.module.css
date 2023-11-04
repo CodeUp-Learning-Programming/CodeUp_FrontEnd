@@ -3,8 +3,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;  
+  background-color: #101010;
 }
 
 .nav {
   margin-left: 40px;
+  width: 24rem;
+  display: flex;
+  justify-content: space-between;
+
 }

@@ -8,7 +8,7 @@ export const HeaderHome = () => {
   return (
     <header className={style.header + " container"}>
       <img src={logo} alt="Logo CodeUp" />
-      <nav>
+      <nav className={style.nav}>
         <Link to="/">Metodologia</Link>
         <Link to="/login">Login</Link>
         <Link to="/login">
