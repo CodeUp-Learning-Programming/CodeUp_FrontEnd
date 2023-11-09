@@ -49,7 +49,6 @@ async function login() {
     email: sessionStorage.tempMail,
     senha: "tempUser"
   })
-  console.log(tempMail)
 
   const response = await fetch(url, options);
   if(response.ok){

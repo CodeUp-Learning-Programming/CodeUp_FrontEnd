@@ -1,6 +1,6 @@
 import Monaco, { useMonaco } from '@monaco-editor/react';
 import { useState, useRef, useEffect } from 'react';
-
+import { TemasComprados } from './TemasComprados.jsx';
 import Amy from './themes/Amy.json';
 import MonokaiBrightTheme from './themes/Monokai Bright.json';
 import Monokai from './themes/Monokai.json';
@@ -8,7 +8,7 @@ import Monokai from './themes/Monokai.json';
 import './monaco.css';
 
 function MonacoEditor({classe}) {
-  const [data, setData] = useState([]);
+  //const [data, setData] = useState([]);
   const monaco = useMonaco();
   const [conteudoTeorico, setConteudoTeorico] = useState('');
   const [desafio, setDesafio] = useState('');
@@ -111,21 +111,20 @@ function MonacoEditor({classe}) {
 
   const listaTemas = ['vs', 'vs-dark', 'hc-black', Amy, MonokaiBrightTheme, Monokai]
   const handleThemeChange = (event) => {
-    if (event.target.value === 0) {
+    const selectedValue = parseInt(event.target.value, 10); // Parse the value as an integer
+    console.log("aaa")
+    if (selectedValue === 0) {
       monaco.editor.setTheme('vs');
-
-    } else if (event.target.value === 1) {
+    } else if (selectedValue === 1) {
       monaco.editor.setTheme('vs-dark');
-
-    } else if (event.target.value === 2) {
+    } else if (selectedValue === 2) {
       monaco.editor.setTheme('hc-black');
-
     } else {
-      monaco.editor.defineTheme('meu-tema', listaTemas[event.target.value]);
+      monaco.editor.defineTheme('meu-tema', listaTemas[selectedValue]);
       monaco.editor.setTheme('meu-tema');
     }
-
   };
+  
 
   const selecionarFase = (event) =>{
     var faseSelecionada = event.target.value;
@@ -135,21 +134,7 @@ function MonacoEditor({classe}) {
 
   return (
     <div className={classe}>
-      {/* <select id='selectTemas' onChange={handleThemeChange} >
-        <option value='0'>Visual Studio</option>
-        <option value='1'>Visual Studio Dark</option>
-        <option value='2'>High Contrast Black</option>
-        <option value='3'>Amy</option>
-        <option value='4'>MonokaiBrightTheme</option>
-        <option value='5'>Monokai</option>
-      </select>
-      <select id='selectFase' onChange={selecionarFase} >
-        <option value='1'>Soma</option>
-        <option value='2'>Subtração</option>
-        <option value='3'>Multiplicação</option>
-        <option value='4'>Divisão</option>
-      </select> */}
-      
+    <TemasComprados/>      
       {/* <button className='botao' onClick={validar}>Verificar</button>
       <button className='botao' onClick={handleSave}>Salvar</button>
       <button className='botao' onClick={buscarFase}>Buscar fase</button> */}
@@ -162,7 +147,7 @@ function MonacoEditor({classe}) {
             width='50vw'
             theme={theme}
             defaultLanguage='javascript'
-            
+          
             value={layoutFuncao}
             onChange={(textoDigitado) => setLayoutFuncao(textoDigitado)}
             onValidate={handleEditorValidation}

@@ -42,3 +42,30 @@ export function USER_GET(body) {
     };
   }
 
+  export function GET_EXERCICIOS_FASE(body,token) {
+    return {
+      url: API_URL + "/exercicios",
+      options: {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(body),
+      },
+    };
+  }
+
+  export function GET_MATERIA(body,token) {
+    return {
+      url: API_URL + "/exercicios",
+      options: {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(body),
+      },
+    };
+  }
