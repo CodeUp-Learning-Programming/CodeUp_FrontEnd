@@ -56,6 +56,8 @@ const Login = () => {
     if(response.ok){
       login()
       console.log(response)
+    }else{
+      console.log(response)
     }
   }
 

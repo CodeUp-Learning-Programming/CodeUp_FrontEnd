@@ -42,30 +42,41 @@ export function USER_GET(body) {
     };
   }
 
-  export function GET_EXERCICIOS_FASE(body,token) {
+  export function GET_MATERIA(token) {
     return {
-      url: API_URL + "/exercicios",
+      url: API_URL + "/materias",
       options: {
         method: "GET",
         headers: {
-            "Content-Type": "application/json",
             'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(body),
+        }
+        
       },
     };
   }
 
-  export function GET_MATERIA(body,token) {
+  export function GET_FASES_MATERIA(token,idMateriaSelecionada) {
     return {
-      url: API_URL + "/exercicios",
+      url: API_URL + "/fases/" + idMateriaSelecionada,
       options: {
         method: "GET",
         headers: {
-            "Content-Type": "application/json",
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(body),
       },
     };
   }
+
+  export function GET_EXERCICIOS_FASE(token,idFaseSelecionada) {
+    return {
+      url: API_URL + "/exercicios/" + idFaseSelecionada,
+      options: {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+      },
+    };
+  }
+
+  
