@@ -1,0 +1,46 @@
+.borda{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    background-color: #000000;
+    width: 50rem;
+    height: 15rem;
+    border: 1px solid;
+    border-image: linear-gradient(90deg, #009BF2 0%, #0064FA 100%);
+    border-image-slice: 1;
+}
+
+.titulo{
+    width: 45rem;
+    height: 2rem;
+    color: #FFF;
+    font-size: 24px;
+}
+.progress{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 45rem;
+    height: 6rem;
+}
+
+.materia{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 32px;
+    color: #FFF;
+}
+
+.progressBar{
+    width: 45rem;
+    height: 1rem;
+    background-color: #363636;
+}
+.barra{
+    background: linear-gradient(90deg, #009BF2 0%, #0064FA 116.12%);
+    width: 0rem;
+    height: 1rem;
+    transition: all 600ms;
+}

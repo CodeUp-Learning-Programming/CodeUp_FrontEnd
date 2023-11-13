@@ -6,6 +6,8 @@ import Login from "./components/Login/Login";
 import Menu from "./components/Menu/Menu";
 import Roadmap from "./components/Roadmap/Roadmap";
 import Exercicio from "./components/Exercicio/Exercicio";
+import NotFound from "./components/NotFound/NotFound.jsx";
+import Perfil from "./components/Perfil/Perfil.jsx";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/terminal" element={<Monaco />} />
           <Route path="/exercicio" element={<Exercicio/>}/>
+          <Route path="/perfil" element={<Perfil/>}/>
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
       </BrowserRouter>
     </>

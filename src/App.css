@@ -55,7 +55,27 @@ a{
   z-index: 1;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border: 1px solid;
+    border-image: linear-gradient(90deg, #009BF2 0%, #0064FA 100%);
+    border-image-slice: 1;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #009BF2 0%, #0064FA 100%);
+}
 
 /* .animeLeft{
   opacity: 0;

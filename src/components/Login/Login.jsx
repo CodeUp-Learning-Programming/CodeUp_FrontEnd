@@ -32,11 +32,12 @@ const Login = () => {
 
     const response = await fetch(url, options);
     if(response.ok){
-      console.log(response)
       const data = await response.json();
+      console.log(data)
       sessionStorage.setItem('id', data.id); 
       sessionStorage.setItem('nome', data.nome); 
       sessionStorage.setItem('email', data.email); 
+      sessionStorage.setItem('moedas', data.moedas ? data.moedas : 0); 
       sessionStorage.setItem('tokenBearer', data.token); 
       setTimeout(() => {
         navigate('/menu');

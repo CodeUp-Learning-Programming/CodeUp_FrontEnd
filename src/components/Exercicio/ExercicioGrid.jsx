@@ -7,9 +7,11 @@ import {GET_EXERCICIOS_FASE} from '../../api'
 const ExercicioGrid = () => {
 
   const [exercicios, setExercicios] = useState([]);
+  const [exercicioAtual, setExercicioAtual] = useState([1]);
 
   useEffect(() => {
     buscarExercicios();
+    setExercicioAtual(sessionStorage.qtdExerciciosConcluidos);
   }, []);
   
   async function buscarExercicios() {
@@ -25,28 +27,21 @@ const ExercicioGrid = () => {
     buscarExercicios();
   }, []);
   
-  useEffect(() => {
-    console.log(exercicios);
-    console.log(sessionStorage.qtdExerciciosConcluidos-1)
-    console.log(sessionStorage.qtdExercicios)
-  }, [exercicios]);
-  
-  //Passar props
   return (
     <div className={style.grid}>
       {exercicios.length > 0 ? (
         <>
           <Content
             titulo="Aprendendo"
-            totalExerciciosConcluidos={sessionStorage.qtdExerciciosConcluidos}
+            totalExerciciosConcluidos={exercicioAtual != 0? exercicioAtual : 1}
             totalExercicios={sessionStorage.qtdExercicios}
-            conteudoTeorico={exercicios[sessionStorage.qtdExerciciosConcluidos - 1].conteudoTeorico}
-            desafio={exercicios[sessionStorage.qtdExerciciosConcluidos - 1].desafio}
-            instrucao={exercicios[sessionStorage.qtdExerciciosConcluidos - 1].instrucao}
+            conteudoTeorico={exercicios[exercicioAtual].conteudoTeorico}
+            desafio={exercicios[exercicioAtual].desafio}
+            instrucao={exercicios[exercicioAtual].instrucao}
             classe={style.content}
           />
           <MonacoEditor
-            layoutFuncao={exercicios[sessionStorage.qtdExerciciosConcluidos - 1].layoutFuncao}
+            layoutFuncao={exercicios[exercicioAtual].layoutFuncao}
             className={style.terminal}
           />
         </>

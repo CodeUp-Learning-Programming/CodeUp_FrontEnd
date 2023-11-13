@@ -2,11 +2,13 @@ import React from 'react'
 import CardEstudar from './CardEstudar'
 import EmBreve from './EmBreve'
 import styles from './MenuOptions.module.css'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { GET_MATERIA } from '../../api'
 
 const MenuOptions = () => {
 
+  const navigate = useNavigate()
+  
   async function buscarMaterias() {
 
     const { url, options } = GET_MATERIA(sessionStorage.tokenBearer);
@@ -19,13 +21,17 @@ const MenuOptions = () => {
         sessionStorage.setItem("materiaSelecionadaId", data[0].id)
         sessionStorage.setItem("materiaSelecionada", data[0].nome)
       }
+
+        console.log("indo para o Roadmap");
+        navigate("/roadmap")
+
     }
 
   }
   return (
     <section className={styles.bg}>
       <div className={styles.grid + ' container'}>
-        <Link className={styles.estudo} onClick={buscarMaterias} to="/roadmap">
+        <Link className={styles.estudo} onClick={buscarMaterias}>
           <CardEstudar classe={styles.estudo2} />
         </Link>
 

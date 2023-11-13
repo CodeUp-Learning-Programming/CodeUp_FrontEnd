@@ -7,43 +7,13 @@ import './monaco.css';
 
 function MonacoEditor({classe, layoutFuncao}) {
   //const [data, setData] = useState([]);
+  const lay = layoutFuncao.replace(/\\n/g, '\n')
   const monaco = useMonaco();
-  var layoutFormatter = layoutFuncao
-  const [layout, setLayout] = useState(layoutFormatter);
+  const [layout, setLayout] = useState(lay);
   const [theme, setTheme] = useState('vs-dark'); // Initialize with vs-dark theme
   const [errorMessages, setErrorMessages] = useState([]);
   const [consoleMessages, setConsoleMessages] = useState([]);
 
-  
-
-    // function buscarFase() {
-
-    //   const config = {
-    //     method: 'GET',
-    //     url: `/fases/${sessionStorage.faseSelecionada}`,
-    //     headers: {
-    //       'Authorization': `Bearer ${sessionStorage.tokenBearer}` // Aqui, adicionamos o token Bearer ao cabeçalho Authorization
-    //     }
-    //   };
-  
-    //   api(config)
-    //   .then((respostaObtida) => {
-    //   // cairá aqui se a requisição for realizada;
-    //   console.log(respostaObtida);
-    //   // objeto que representa a resposta enviada pela API;
-    //   console.log(respostaObtida.status);
-    //   // vendo status da resposta (OK - 200);
-    //   console.log(respostaObtida.data);
-    //   // vendo os dados da resposta (data: []);
-
-    //   setLayoutFuncao(respostaObtida.data.conteudo_exec)
-    //   setData(respostaObtida.data)
-    //   // setando "musicas" com os mesmos dados recebidos pela resposta da requisição;
-    //   })
-    //   .catch((erroOcorrido) => { // cairá aqui se houver algum erro durante a requisição
-    //   console.log(erroOcorrido);
-    //   })
-    //   }
 
   const editorRef = useRef(null);
 
@@ -121,7 +91,7 @@ function MonacoEditor({classe, layoutFuncao}) {
             width='50vw'
             theme={theme}
             defaultLanguage='javascript'
-            value={layoutFuncao}
+            value={layout}
             onChange={(textoDigitado) => setLayoutFuncao(textoDigitado)}
             onValidate={handleEditorValidation}
           />
