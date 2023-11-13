@@ -10,7 +10,7 @@ const [mensagem, setMensagem] = useState("");
 
 const navigate = useNavigate();
 
-var cookie = true
+var cookie = false;
 
 // function criarCookie(nome, valor) {
 //   document.cookie = `${nome}=${valor}; path=/`;
@@ -65,17 +65,19 @@ async function login() {
 }
 
   return (
+    <div className={style.background}>
     <section className={style.main + " container"}>
       <div className={style.leftBox}>
         <div className={style.titulo}>
             Aprenda programação e desbloqueie suas habilidades!
         </div>
         <div className={style.button}>
-         <Button setValue={cadastrar} texto={`${cookie ? "Continue de onde parou!" : "Comece agora sem cadastro!"}`}/>
+         <Button type={true} setValue={cadastrar} texto={`${cookie ? "CONTINUE DE ONDE PAROU!" : "COMECE AGORA"}`}/>
         </div>
       </div>
       <img src={Not} alt="Logo CodeUp" className = {style.img}/>
     </section>
+    </div>
   
   );
 };

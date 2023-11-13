@@ -4,6 +4,7 @@ import style from "./BottomSectionHome.module.css";
 export const BottomSectionHome = () => {
 
   return (
+    <div className={style.background }>
     <section className={style.main + " container"}>
       <div className={style.titulo}>
         Uma maneira diferente de estudar
@@ -25,7 +26,7 @@ export const BottomSectionHome = () => {
               Projetos
             </div>
             <div className={style.text}>
-              Durante sua jornada da UP você fará projetos para consolidar o seu conhecimento e será dado todas as ferramentas para realizá-lo
+              Durante sua jornada na UP você fará projetos para consolidar o seu conhecimento e será dado todas as ferramentas para realizá-lo
             </div>
           </div>
 
@@ -48,16 +49,16 @@ export const BottomSectionHome = () => {
 
           <div className={style.textBox}>
             <div className={style.tituloVerde}>
-              Projetos
+              Prática
             </div>
             <div className={style.text}>
-            Evolua e adquira certificados e troféus virtuais como recompensa 
+            Evolua com muita prática para consolidar o conhecimento
             </div>
           </div>
 
         </div>
       </div>
     </section>
-
+  </div>
   );
 };

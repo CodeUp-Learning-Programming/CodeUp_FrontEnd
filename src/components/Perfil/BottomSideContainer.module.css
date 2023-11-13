@@ -1,35 +1,29 @@
 .borda {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
     background-color: #000000;
-    width: 50rem;
-    height: 28rem;
     border: 1px solid;
     border-image: linear-gradient(90deg, #009BF2 0%, #0064FA 100%);
     border-image-slice: 1;
+    width: 100%;
+    padding: 15px 20px;
 }
 
 .titulo {
     width: 45rem;
-    height: 2rem;
     color: #FFF;
     font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
 .lista{
     display: flex;
-    height: 20rem;
-    width: 45rem;
-    max-width: 50rem;
     flex-wrap: wrap;
     overflow: scroll;
-    overflow-x: hidden;
-    padding-top: 1rem;
-    padding-left: 1rem;
-    border: 1px solid;
+    max-height: 26vh;
+    gap: 20px;
+    padding: 10px;
     border-image: #2A2A2A;
+    
 }
 
 .item {
@@ -37,8 +31,7 @@
     height: 5rem;   
     flex-shrink: 0;
     background: #2A2A2A;
-    margin-right: 1rem;
-    margin-bottom: 2rem;
+
 }
 
 .item:hover {

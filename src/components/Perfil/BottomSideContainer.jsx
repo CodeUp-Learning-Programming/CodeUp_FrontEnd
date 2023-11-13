@@ -5,7 +5,7 @@ import candy from '../../assets/Loja/candy.jpg';
 import ghost from '../../assets/Loja/ghost.jpg';
 import halloween from '../../assets/Loja/halloween.jpg';
 
-const BottomSideContainer = ({ titulo }) => {
+const BottomSideContainer = ({ titulo, classe }) => {
   const item1 = {
     imagem: blackCat
   };
@@ -31,7 +31,7 @@ const BottomSideContainer = ({ titulo }) => {
   }, [numero]);
 
   return (
-    <div className={style.borda}>
+    <div className={style.borda + " " + classe}>
       <div className={style.titulo}>{titulo}</div>
       <div className={style.lista}>
         {itensComprados.map((item, index) => (

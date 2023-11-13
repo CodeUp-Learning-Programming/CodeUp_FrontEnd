@@ -13,3 +13,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.buttonMain{
+    font-size: 1.5rem;
+    padding: 10px 20px;
+}

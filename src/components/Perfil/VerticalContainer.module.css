@@ -5,35 +5,38 @@
     flex-direction: column;
     background-color: #000000;
     color: #FFF;
-    width: 20rem;
-    height: 46.5rem;
     border: 1px solid;
     border-image: linear-gradient(90deg, #009BF2 0%, #0064FA 100%);
     border-image-slice: 1;
+    height: 100%;
+    padding: 0px 45px;
+    
 }
 
 .box{
-display: flex;
-justify-content: space-around;
-align-items: center;
-flex-direction: column;
-padding-top: 5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    
+    
 }
 .name{
-    font-size: 32px;
+    font-size: 2rem;
+    font-weight: 600;
 }
 .ranking{
     font-size: 20px;
+    font-weight: 600;
 
 }
 .text{
-    font-size: 32px;
+    font-size: 2rem;
+    font-weight: 600;
     color: #00A3FF;
 }
 
 .imagem{
-    width: 16rem;
-    height: 16rem;
-    border-radius: 10rem;
-    margin-bottom: 2rem;
+    
+    border-radius: 100%;
 }
