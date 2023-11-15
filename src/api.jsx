@@ -79,4 +79,17 @@ export function USER_GET(body) {
     };
   }
 
+  export function VALIDAR_EXERCICIO(token, idExercicio, layout) {
+    const encodedLayout = encodeURIComponent(layout);
+  
+    var url = `${API_URL}/teste?funcao=${encodedLayout}`;
+    console.log(url)
+    return fetch(url, {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+  }
+  
   

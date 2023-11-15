@@ -7,11 +7,12 @@ import {GET_EXERCICIOS_FASE} from '../../api'
 const ExercicioGrid = () => {
 
   const [exercicios, setExercicios] = useState([]);
-  const [exercicioAtual, setExercicioAtual] = useState([1]);
+  const [exercicioAtual, setExercicioAtual] = useState(sessionStorage.qtdExerciciosConcluidos == sessionStorage.qtdExercicios ? sessionStorage.qtdExercicios -1: exercicioAtual != 0 ? exercicioAtual : 1);
 
   useEffect(() => {
     buscarExercicios();
-    setExercicioAtual(sessionStorage.qtdExerciciosConcluidos);
+    setExercicioAtual(sessionStorage.qtdExerciciosConcluidos == sessionStorage.qtdExercicios ? sessionStorage.qtdExercicios -1: exercicioAtual != 0 ? exercicioAtual : 1);
+    console.log(exercicioAtual)
   }, []);
   
   async function buscarExercicios() {
@@ -23,10 +24,6 @@ const ExercicioGrid = () => {
     }
   }
 
-  useEffect(() => {
-    buscarExercicios();
-  }, []);
-  
   return (
     <div className={style.grid}>
       {exercicios.length > 0 ? (

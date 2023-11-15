@@ -1,9 +1,10 @@
 import Monaco, { useMonaco } from '@monaco-editor/react';
 import { useState, useRef, useEffect } from 'react';
 import TemasComprados from './TemasComprados';
-
-
+import { VALIDAR_EXERCICIO } from '../../api';
 import './monaco.css';
+
+
 
 function MonacoEditor({classe, layoutFuncao}) {
   //const [data, setData] = useState([]);
@@ -33,32 +34,21 @@ function MonacoEditor({classe, layoutFuncao}) {
     setErrorMessages(errorMessages);
   }
 
-  function validar(){
-
-    // Pega o conteudo do editor
-    var conteudo = editorRef.current.getValue(); 
-    // Números para fazer o teste
-    const listaNumeros = [5,6,7,8,9,10,11,22,13,14];
-    // Total de acertos necessários para passar 
-    const acertosNecessarios = 5;
-    let acertosTotais = 0;
-    // Inicio dos testes
-    for(var i = 0; i < listaNumeros.length; i+=2){
-      //Chamando a função digitada
-      const exec = `${conteudo}exercicio(${listaNumeros[i]}, ${listaNumeros[i+1]});`
-      // Executa o teste
-      const resultado = eval(exec);
-      // Valida se acertou o teste
-      if(resultado === listaNumeros[i] + listaNumeros[i+1]){
-        acertosTotais++;
-        console.log("Acertou")
+  async function validar(){
+    
+      const{url,options} = VALIDAR_EXERCICIO (sessionStorage.tokenBearer, sessionStorage.idExercicio, layout)
+  
+      const response = await fetch(url, options);
+      if(response.ok){
+        const data = await response.json();
+        console.log(" ir para a proxima fase")
+        setTimeout(() => {
+          //navigate('/');
+          console.log("Trocando de fase")
+        }, 1000);
       }
-    }
-    var msg = `O seu código não está correto! Acertou um total de ${acertosTotais} dos testes`
-    if(acertosNecessarios === acertosTotais){
-      msg = `O seu código está correto! Acertou um total de ${acertosTotais} dos testes`
-    }
-    setConsoleMessages(msg)
+      
+    
   }
 
   function handleThemeChange() {
@@ -92,7 +82,7 @@ function MonacoEditor({classe, layoutFuncao}) {
             theme={theme}
             defaultLanguage='javascript'
             value={layout}
-            onChange={(textoDigitado) => setLayoutFuncao(textoDigitado)}
+            onChange={(textoDigitado) => setLayout(textoDigitado)}
             onValidate={handleEditorValidation}
           />
         </div>
