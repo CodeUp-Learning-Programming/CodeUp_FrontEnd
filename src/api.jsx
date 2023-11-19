@@ -68,7 +68,9 @@ export function USER_GET(body) {
   }
 
   export function GET_EXERCICIOS_FASE(token,idFaseSelecionada) {
+
     return {
+      
       url: API_URL + "/exercicios/" + idFaseSelecionada,
       options: {
         method: "GET",
@@ -79,17 +81,17 @@ export function USER_GET(body) {
     };
   }
 
-  export function VALIDAR_EXERCICIO(token, idExercicio, layout) {
-    const encodedLayout = encodeURIComponent(layout);
-  
-    var url = `${API_URL}/teste?funcao=${encodedLayout}`;
-    console.log(url)
-    return fetch(url, {
-      method: "GET",
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
+  export function VALIDAR_EXERCICIO(token, layout) {
+    return{
+
+      url: API_URL + "/testes/js?funcao="+`${encodeURIComponent(layout)}`,
+      options: {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    },
+   };
   }
   
   

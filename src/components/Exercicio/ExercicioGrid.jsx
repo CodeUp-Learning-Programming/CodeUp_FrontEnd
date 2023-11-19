@@ -7,19 +7,25 @@ import {GET_EXERCICIOS_FASE} from '../../api'
 const ExercicioGrid = () => {
 
   const [exercicios, setExercicios] = useState([]);
-  const [exercicioAtual, setExercicioAtual] = useState(sessionStorage.qtdExerciciosConcluidos == sessionStorage.qtdExercicios ? sessionStorage.qtdExercicios -1: exercicioAtual != 0 ? exercicioAtual : 1);
+  const [exercicioAtual, setExercicioAtual] = useState();
 
   useEffect(() => {
-    buscarExercicios();
-    setExercicioAtual(sessionStorage.qtdExerciciosConcluidos == sessionStorage.qtdExercicios ? sessionStorage.qtdExercicios -1: exercicioAtual != 0 ? exercicioAtual : 1);
-    console.log(exercicioAtual)
-  }, []);
+    const fetchData = async () => {
+      await buscarExercicios();
+    };
+    
+    setExercicioAtual(sessionStorage.qtdExerciciosFaseConcluidos == sessionStorage.qtdExerciciosFase ?
+      sessionStorage.qtdExerciciosFase -1 : sessionStorage.qtdExerciciosFaseConcluidos != 0 ?
+      sessionStorage.qtdExerciciosFaseConcluidos: 0)
+    fetchData();
+  }, [exercicioAtual]); // exercicioAtual adicionado como dependência
   
   async function buscarExercicios() {
     const { url, options } = GET_EXERCICIOS_FASE(sessionStorage.tokenBearer, sessionStorage.faseSelecionadaId);
     const response = await fetch(url, options);
     if (response.ok) {
       const data = await response.json();
+      console.log(data)
       setExercicios(data);
     }
   }
@@ -27,11 +33,11 @@ const ExercicioGrid = () => {
   return (
     <div className={style.grid}>
       {exercicios.length > 0 ? (
-        <>
+        <>  
           <Content
-            titulo="Aprendendo"
-            totalExerciciosConcluidos={exercicioAtual != 0? exercicioAtual : 1}
-            totalExercicios={sessionStorage.qtdExercicios}
+            titulo={exercicios[exercicioAtual].titulo ? exercicios[exercicioAtual].titulo : "Aprendendo"}
+            totalExerciciosConcluidos={Number(exercicioAtual) + 1}
+            totalExercicios={sessionStorage.qtdExerciciosFase}
             conteudoTeorico={exercicios[exercicioAtual].conteudoTeorico}
             desafio={exercicios[exercicioAtual].desafio}
             instrucao={exercicios[exercicioAtual].instrucao}
@@ -39,6 +45,8 @@ const ExercicioGrid = () => {
           />
           <MonacoEditor
             layoutFuncao={exercicios[exercicioAtual].layoutFuncao}
+            moeda = {exercicios[exercicioAtual].moeda}
+            xp = {exercicios[exercicioAtual].xp}
             className={style.terminal}
           />
         </>

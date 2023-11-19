@@ -9,6 +9,7 @@ const TopSideContainer = ({ titulo, progresso, classe }) => {
       progressBar.style.width = `${progresso > 100 ? 100 : progresso < 0 ? 0 : progresso}%`;
     }
   },[progresso]);
+  
 
 
   return (

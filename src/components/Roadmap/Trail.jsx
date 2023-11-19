@@ -23,10 +23,10 @@ const Trail = () => {
     }
   }
 
-  function redirectFase(id, qtdExerciciosConcluidos, qtdExercicios){
+  function redirectFase(id, qtdExerciciosFaseConcluidos, qtdExerciciosFase){
     sessionStorage.setItem('faseSelecionadaId', id)
-    sessionStorage.setItem('qtdExerciciosConcluidos', qtdExerciciosConcluidos)
-    sessionStorage.setItem('qtdExercicios', qtdExercicios)
+    sessionStorage.setItem('qtdExerciciosFaseConcluidos', qtdExerciciosFaseConcluidos)
+    sessionStorage.setItem('qtdExerciciosFase', qtdExerciciosFase)
   }
 
   return (
@@ -40,12 +40,12 @@ const Trail = () => {
       <div className={styles.containerCards}>
       {fases.map((fase) => (
         console.log(fase),
-        <Link onClick={() => redirectFase(fase.id, fase.qtdExerciciosConcluidos, fase.qtdExercicios)} to="/exercicio" key={fase.id}>
+        <Link onClick={() => redirectFase(fase.faseId, fase.qtdExerciciosFaseConcluidos, fase.qtdExerciciosFase)} to="/exercicio" key={fase.faseId}>
               <Card
-                id={fase.id}
-                titulo={fase.titulo}
+                id={fase.faseId}
+                titulo={fase.tituloFase}
                 subtitulo="Aprenda"
-                status={fase.qtdExerciciosConcluidos >= fase.qtdExercicios  && fase.qtdExercicios != 0 || fase.numFase == 1? "on" : ""}
+                status={fase.qtdExerciciosFaseConcluidos >= fase.qtdExerciciosFase  && fase.qtdExerciciosFase != 0 || fase.numFase == 1? "on" : ""}
                 />
             </Link>
           ))}

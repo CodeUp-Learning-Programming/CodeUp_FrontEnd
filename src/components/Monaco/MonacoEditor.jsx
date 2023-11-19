@@ -1,21 +1,22 @@
 import Monaco, { useMonaco } from '@monaco-editor/react';
+import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from 'react';
 import TemasComprados from './TemasComprados';
 import { VALIDAR_EXERCICIO } from '../../api';
+
 import './monaco.css';
 
 
 
-function MonacoEditor({classe, layoutFuncao}) {
+function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
   //const [data, setData] = useState([]);
-  const lay = layoutFuncao.replace(/\\n/g, '\n')
+  // const lay = layoutFuncao.replace(/\\n/g, '\n')
   const monaco = useMonaco();
-  const [layout, setLayout] = useState(lay);
+  const [layout, setLayout] = useState("");
   const [theme, setTheme] = useState('vs-dark'); // Initialize with vs-dark theme
   const [errorMessages, setErrorMessages] = useState([]);
   const [consoleMessages, setConsoleMessages] = useState([]);
-
-
+  const navigate = useNavigate();
   const editorRef = useRef(null);
 
   const handleSave = () => {
@@ -26,30 +27,71 @@ function MonacoEditor({classe, layoutFuncao}) {
   function handleEditorValidation(markers) {
     // Filtra apenas os marcadores de erro
     const errorMarkers = markers.filter((marker) => marker.severity === monaco.MarkerSeverity.Error);
-
     // Obtém as mensagens de erro dos marcadores
     const errorMessages = errorMarkers.map((marker) => marker.message);
-
     // Atualiza o estado com as mensagens de erro
     setErrorMessages(errorMessages);
   }
 
-  async function validar(){
-    
-      const{url,options} = VALIDAR_EXERCICIO (sessionStorage.tokenBearer, sessionStorage.idExercicio, layout)
-  
-      const response = await fetch(url, options);
-      if(response.ok){
-        const data = await response.json();
-        console.log(" ir para a proxima fase")
-        setTimeout(() => {
-          //navigate('/');
-          console.log("Trocando de fase")
-        }, 1000);
+  async function validar() {
+    var validar = document.getElementById("validar");
+    validar.style.animation = 'trocarCores 2s infinite';
+
+    if (!layout) {
+      setLayout(" ");
+    }
+    var layoutCerto = layoutFuncao.replace('{resposta}', `${layout}`);
+    const { url, options } = VALIDAR_EXERCICIO(sessionStorage.tokenBearer, layoutCerto)
+
+    const response = await fetch(url, options);
+    if (response.ok) {
+      validar.style.animation = 'none';
+      validar.style = `border-image-source: linear-gradient(90deg, rgba(0,226,242,1) 0%, rgba(0,127,251,1) 100%);`;
+
+
+      var data = await response.json();
+      if (data.passou) {
+        if (sessionStorage.qtdExerciciosFase == sessionStorage.qtdExerciciosFaseConcluidos) {
+          console.log("Você já terminou essa fase!")
+        } else {
+          console.log(data.resultado)
+          console.log("ir para a proxima fase")
+          setTimeout(() => {
+            sessionStorage.xp = Number(sessionStorage.xp)+Number(xp);
+            sessionStorage.moedas = Number(sessionStorage.moedas)+Number(moeda);
+            sessionStorage.qtdExerciciosFaseConcluidos++;
+            window.location.reload();
+            console.log("Trocando de fase")
+          }, 1000);
+        }
+
+      } else {
+        validar.style.animation = 'none';
+        validar.style = `border-image-source: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 128, 0, 1) 50%, rgba(255, 255, 0, 1) 100%);`;
+
+        var result = data.resultado
+        result = data.resultado.replace(layoutCerto, layout)
+        console.log(result)
+
+        if (result.includes("Thread was interrupted.")) {
+          console.log("Timeout")
+        }
+        if (result.includes("Expected ;")) {
+          console.log("Você esqueceu de colocar ; em alguma linha do código!");
+        }
+
+        if (result.includes("ReferenceError:") && result.includes("is not defined")) {
+          result = result.replace("ReferenceError:", "")
+          result = result.replace("is not defined", "")
+          console.log(`A variável${result}não está definida (undefined)`)
+        }
       }
-      
-    
+
+    }
+
   }
+
+
 
   function handleThemeChange() {
     console.log(selectTemas.options.select)
@@ -64,11 +106,28 @@ function MonacoEditor({classe, layoutFuncao}) {
       monaco.editor.setTheme('meu-tema');
     }
   }
-  
 
-  const selecionarFase = (event) =>{
-    var faseSelecionada = event.target.value;
-    sessionStorage.setItem("faseSelecionada", faseSelecionada)
+
+  const mudarFase = (event) => {
+    if (event === "voltar") {
+      if (sessionStorage.qtdExerciciosFaseConcluidos - 1 < 0) {
+        console.log("Você já está na primeira fase!")
+      } else {
+        console.log("Voltando uma fase!");
+        sessionStorage.qtdExerciciosFaseConcluidos--;
+        window.location.reload();
+      }
+    } else if (event === "avancar") {
+
+      if (sessionStorage.qtdExerciciosFaseConcluidos >= sessionStorage.qtdExerciciosFase - 1) {
+        console.log("Você já está na ultima fase!")
+      } else {
+        console.log("Avançando uma fase!")
+        sessionStorage.qtdExerciciosFaseConcluidos++;
+        window.location.reload();
+      }
+
+    }
   }
 
   return (
@@ -86,23 +145,28 @@ function MonacoEditor({classe, layoutFuncao}) {
             onValidate={handleEditorValidation}
           />
         </div>
-        <div id='console' className='console'> 
-      <TemasComprados handleThemeChange={handleThemeChange} />
-        <div>
-        {consoleMessages}    
-      {/* Exibe mensagens de erro */}
-      {errorMessages.length > 0 && (
-        <div>
-          <h2>Mensagens de Erro:</h2>
-          <ul>
-            {errorMessages.map((message, index) => (
-              <li key={index}>{message}</li>
-            ))}
-          </ul>
+        <div id='console' className='console'>
+          <TemasComprados handleThemeChange={handleThemeChange} />
+          <div>
+            {consoleMessages}
+            {/* Exibe mensagens de erro */}
+            {errorMessages.length > 0 && (
+              <div>
+                <h2>Mensagens de Erro:</h2>
+                <ul>
+                  {errorMessages.map((message, index) => (
+                    <li key={index}>{message}</li>
+                  ))}
+                </ul>
+              </div>
+            )}</div>
         </div>
-      )}</div>
+        <div className='botoes'>
+          <button className='botao' onClick={() => { mudarFase("voltar") }}>Voltar</button>
+          <button className='botao' onClick={() => { mudarFase("avancar") }}>Proxima</button>
+          <button className='botao' id='validar' onClick={validar}>Verificar</button>
+
         </div>
-        <button className='botao' onClick={validar}>Verificar</button>
       </span>
     </div>
   )
