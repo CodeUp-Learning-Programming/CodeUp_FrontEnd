@@ -73,6 +73,33 @@ const Login = () => {
       sessionStorage.setItem('moedas', data.moedas ? data.moedas : 0);
       sessionStorage.setItem('xp', data.xp ? data.xp : 0);
       sessionStorage.setItem('tokenBearer', data.token);
+      // Seu JSON
+      const coresJson = {
+        "palavrasChave": {
+          "function": "#0000FF",
+          "if": "#800080",
+          "else": "#800080",
+          "for": "#800080",
+          "while": "#800080",
+          "switch": "#800080",
+          "case": "#800080",
+          "return": "#800080",
+          "const": "#0000FF",
+          "let": "#0000FF",
+          "var": "#0000FF",
+          "Object": "#008000",
+          "Array": "#008000",
+          "String": "#FF0000",
+          "Number": "#FFA500",
+          "comentario": "#808080",
+          "linha": "#808080",
+          "cadeiasCaracteres": "#FF0000",
+          "numeros": "#FFA500"
+        },
+      };
+      
+      var coresJSONString = JSON.stringify(coresJson.palavrasChave);
+      sessionStorage.setItem('tema', coresJSONString);
       setTimeout(() => {
         navigate('/menu');
       }, 1000);
@@ -153,11 +180,11 @@ const Login = () => {
       mensagem = "A senha deve conter no mínimo 6 caracteres!";
       inputSenha.title = mensagem;
 
-    } else if(senha.length > 25){
+    } else if (senha.length > 25) {
       mensagem = "A senha deve conter no máximo 25 caracteres!";
       inputSenha.title = mensagem;
 
-    }else {
+    } else {
       senhaValida = true;
       mensagem = "A senha está válida";
       inputSenha.title = mensagem;

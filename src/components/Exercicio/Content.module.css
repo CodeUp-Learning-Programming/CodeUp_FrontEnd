@@ -25,4 +25,14 @@
   background-color: white;
   margin: 10px 0;
 }
+.conteudo{
+  margin-top:1rem ;
+  margin-bottom:1rem ;
+}
+.recuo { 
+  text-indent:1em;
+}
 
+.colorir{
+  color: #fff
+}

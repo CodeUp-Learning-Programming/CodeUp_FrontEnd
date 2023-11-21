@@ -34,9 +34,9 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
   }
 
   async function validar() {
+    {handleSave}
     var validar = document.getElementById("validar");
     validar.style.animation = 'trocarCores 2s infinite';
-
     if (!layout) {
       setLayout(" ");
     }
@@ -71,19 +71,18 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
 
         var result = data.resultado
         result = data.resultado.replace(layoutCerto, layout)
-        console.log(result)
 
         if (result.includes("Thread was interrupted.")) {
-          console.log("Timeout")
+          setConsoleMessages("Timeout, seu código demorou muito para rodar, fique atento com um loop infinito!")
         }
         if (result.includes("Expected ;")) {
-          console.log("Você esqueceu de colocar ; em alguma linha do código!");
+          setConsoleMessages("Você esqueceu de colocar ; em alguma linha do código!");
         }
 
         if (result.includes("ReferenceError:") && result.includes("is not defined")) {
           result = result.replace("ReferenceError:", "")
           result = result.replace("is not defined", "")
-          console.log(`A variável${result}não está definida (undefined)`)
+          setConsoleMessages(`A variável${result}não está definida (undefined)`)
         }
       }
 
@@ -146,7 +145,7 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
           />
         </div>
         <div id='console' className='console'>
-          <TemasComprados handleThemeChange={handleThemeChange} />
+          {/* <TemasComprados handleThemeChange={handleThemeChange} /> */}
           <div>
             {consoleMessages}
             {/* Exibe mensagens de erro */}
