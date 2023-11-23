@@ -1,12 +1,14 @@
-import React from 'react'
+import React,{ useState} from 'react'
 import { Link, useNavigate  } from "react-router-dom";
 import logo from '../assets/Codeup.png'
 import styles from './Header.module.css'
-import img from '../assets/img.png'
 import coin from '../assets/moeda.svg'
-import halloween from '../assets/Loja/halloween.jpg'
+import padrao from '../assets/Loja/halloween.jpg'
+
 
 const Header = () => {
+  const [foto, setFoto] = useState(sessionStorage.fotoPerfil ? padrao : sessionStorage.fotoPerfil);
+
   const navigate = useNavigate()
 
   var materiaSelecionada = sessionStorage.materiaSelecionada ? sessionStorage.materiaSelecionada : "";
@@ -36,7 +38,7 @@ const Header = () => {
         <p className={styles.p}>{ofensivaUsuario} dias</p>
         <p className={styles.p2}>{moeda} <img className={styles.moeda} src={coin} alt="Moeda"/></p>
         <Link to={"/perfil"}>
-        <img className={styles.imagem} src={halloween} alt="Circulo Cinza" />
+        <img className={styles.imagem} src={foto} alt="Circulo Cinza" />
         </Link>
       </nav>
     </div>

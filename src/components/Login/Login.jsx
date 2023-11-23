@@ -6,6 +6,7 @@ import Button from "../Button";
 import Input from "../Input";
 import styles from "./Login.module.css";
 import { func } from "prop-types";
+import padrao from '../../assets/Loja/halloween.jpg'
 
 const Login = () => {
   /* Login */
@@ -69,10 +70,13 @@ const Login = () => {
       sessionStorage.setItem('id', data.id);
       sessionStorage.setItem('nome', data.nome);
       sessionStorage.setItem('email', data.email);
-      sessionStorage.setItem('nivel', data.nivel ? data.nivel : 0);
-      sessionStorage.setItem('moedas', data.moedas ? data.moedas : 0);
-      sessionStorage.setItem('xp', data.xp ? data.xp : 0);
+      sessionStorage.setItem('nivel', data.nivel ?? 0);
+      sessionStorage.setItem('moedas', data.moedas ?? 0);
+      sessionStorage.setItem('xp', data.xp ?? 0);
       sessionStorage.setItem('tokenBearer', data.token);
+      sessionStorage.setItem('fotoPerfil', data.fotoPerfil);
+      const itensAdquiridos = JSON.stringify(data.itensAdquiridos);
+      sessionStorage.setItem('itensAdquiridos', itensAdquiridos);
       // Seu JSON
       const coresJson = {
         "palavrasChave": {
