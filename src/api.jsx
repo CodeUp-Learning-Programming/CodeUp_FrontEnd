@@ -68,9 +68,7 @@ export function USER_GET(body) {
   }
 
   export function GET_EXERCICIOS_FASE(token,idFaseSelecionada) {
-
     return {
-      
       url: API_URL + "/exercicios/" + idFaseSelecionada,
       options: {
         method: "GET",
@@ -83,7 +81,6 @@ export function USER_GET(body) {
 
   export function VALIDAR_EXERCICIO(token, layout) {
     return{
-
       url: API_URL + "/testes/js?funcao="+`${encodeURIComponent(layout)}`,
       options: {
         method: "GET",
@@ -95,3 +92,40 @@ export function USER_GET(body) {
   }
   
   
+  export function BUSCAR_ITENS_LOJA(token) {
+    return{
+      url: API_URL + "/loja",
+      options: {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    },
+   };
+  }
+
+  export function COMPRAR_ITEM_LOJA(token) {
+    return{
+      url: API_URL + "/loja/comprar",
+      options: {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    },
+   };
+  }
+
+  export function EQUIPAR_ITEM_ADQUIRIDO(token, novaFoto) {
+    return {
+        url: API_URL + "/usuarios/foto",
+        options: {
+            method: "PATCH",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json', 
+            },
+            body: novaFoto ,
+        },
+    };
+}

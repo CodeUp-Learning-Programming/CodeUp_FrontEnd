@@ -7,10 +7,8 @@ import padrao from '../assets/Loja/halloween.jpg'
 
 
 const Header = () => {
-  const [foto, setFoto] = useState(sessionStorage.fotoPerfil ? padrao : sessionStorage.fotoPerfil);
-
   const navigate = useNavigate()
-
+  
   var materiaSelecionada = sessionStorage.materiaSelecionada ? sessionStorage.materiaSelecionada : "";
   var ofensivaUsuario = sessionStorage.ofensivaUsuario ? sessionStorage.ofensivaUsuario : "0";
   var moeda = sessionStorage.moedas ? sessionStorage.moedas : 0
@@ -38,7 +36,7 @@ const Header = () => {
         <p className={styles.p}>{ofensivaUsuario} dias</p>
         <p className={styles.p2}>{moeda} <img className={styles.moeda} src={coin} alt="Moeda"/></p>
         <Link to={"/perfil"}>
-        <img className={styles.imagem} src={foto} alt="Circulo Cinza" />
+        <img className={styles.imagem} src={`data:image/png;base64,${sessionStorage.fotoPerfil}`} alt="Circulo Cinza" />
         </Link>
       </nav>
     </div>

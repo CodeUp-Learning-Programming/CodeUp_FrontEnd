@@ -3,7 +3,19 @@ import style from './Button.module.css'
 
 const Button = ({texto, value, setValue, type}) => {
   return (
-    type ? 
+    type && value == "equipar"? 
+    
+    <button 
+    className={style.button + " " + style.buttonEquipar}
+    onClick={() => {
+      setValue()
+    }}
+    >
+      <p>{texto}</p>
+    </button>
+    
+    : type ? 
+     
     <button 
     className={style.button + " " + style.buttonMain}
     onClick={() => {
@@ -21,6 +33,7 @@ const Button = ({texto, value, setValue, type}) => {
     >
       <p>{texto}</p>
     </button> 
+    
   )
 }
 

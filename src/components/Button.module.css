@@ -18,3 +18,12 @@
     font-size: 1.5rem;
     padding: 10px 20px;
 }
+
+.buttonEquipar{
+    background: linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0)) padding-box, linear-gradient(90deg, rgb(0, 129, 54) 0%, rgb(151, 255, 196)) border-box;
+    color: linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0)) padding-box, linear-gradient(90deg, rgb(0, 129, 54) 0%, rgb(151, 255, 196)) border-box;  
+    
+    min-width: 110px;
+    font-size: 1rem;
+
+}

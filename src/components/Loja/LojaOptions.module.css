@@ -117,3 +117,7 @@
     color: white;
     font-weight: 600;
 }
+
+.buttonEquipar{
+    max-width: 240px;
+}

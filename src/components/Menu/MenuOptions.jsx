@@ -19,7 +19,7 @@ const MenuOptions = () => {
       for(var i = 0; i< data.length; i++){
         console.log(data[i])
         sessionStorage.setItem("materiaSelecionadaId", data[0].id)
-        sessionStorage.setItem("materiaSelecionada", data[0].nome)
+        sessionStorage.setItem("materiaSelecionada", data[0].titulo)
       }
 
         console.log("indo para o Roadmap");

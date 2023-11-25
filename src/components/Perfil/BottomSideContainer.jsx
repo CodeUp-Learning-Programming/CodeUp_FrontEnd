@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import style from './BottomSideContainer.module.css';
-import blackCat from '../../assets/Loja/black-cat.jpg';
-import candy from '../../assets/Loja/candy.jpg';
-import ghost from '../../assets/Loja/ghost.jpg';
-import halloween from '../../assets/Loja/halloween.jpg';
+import {EQUIPAR_ITEM_ADQUIRIDO} from '../../api';
+import { func } from 'prop-types';
 
-const BottomSideContainer = ({ titulo, classe }) => {
-  const item1 = {
-    imagem: blackCat
-  };
-  const item2 = {
-    imagem: candy
-  };
-  const item3 = {
-    imagem: ghost
-  };
-  const item4 = {
-    imagem: halloween
-  };
-
-  const listaItens = Array(7).fill([item1, item2, item3, item4]).flat();
+const BottomSideContainer = ({ titulo, classe, atualizarFotoUsuario  }) => {
+  const listaItens = JSON.parse(sessionStorage.itensAdquiridos);
   const [numero, setNumero] = useState(10);
-  const [itensComprados, setItensComprados] = useState(listaItens); // Exemplo de três itens
+  const [itensComprados, setItensComprados] = useState(listaItens);
+
+  async function equiparItem(novaFoto) {
+    const { url, options } = EQUIPAR_ITEM_ADQUIRIDO(sessionStorage.tokenBearer, novaFoto)
+    const response = await fetch(url, options);
+    if (response.ok) {
+        sessionStorage.setItem('fotoPerfil', novaFoto);
+        atualizarFotoUsuario(novaFoto);
+    }
+}
 
   useEffect(() => {
     const progressBar = document.querySelector(`.${style.barra}`);
@@ -35,8 +29,8 @@ const BottomSideContainer = ({ titulo, classe }) => {
       <div className={style.titulo}>{titulo}</div>
       <div className={style.lista}>
         {itensComprados.map((item, index) => (
-          <div className={style.item} key={index}>
-            <img src={item.imagem} alt={`Item ${index + 1}`} />
+          <div className={style.item} key={index} onClick={() => equiparItem(item.fotoItem)}>
+            <img src={`data:image/png;base64,${item.fotoItem}`} alt={item.nomeItem} />
           </div>
         ))}
       </div>

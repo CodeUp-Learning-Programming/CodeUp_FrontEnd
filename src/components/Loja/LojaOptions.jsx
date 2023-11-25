@@ -1,137 +1,119 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './LojaOptions.module.css';
 import moeda from '../../assets/moeda.svg'
 import astronauta from '../../assets/Loja/astronauta.jpeg';
-import blackcat from '../../assets/Loja/black-cat.jpg';
-import candy from '../../assets/Loja/candy.jpg';
-import castelo from '../../assets/Loja/castelo.jpeg';
-import castelo2 from '../../assets/Loja/castelo2.jpeg';
-import ghost from '../../assets/Loja/ghost.jpg';
-import girl from '../../assets/Loja/girl.jpeg';
-import halloween from '../../assets/Loja/halloween.jpg';
-import house from '../../assets/Loja/house.jpeg';
-import penguim from '../../assets/Loja/penguim.jpeg';
-import reuniao from '../../assets/Loja/reuniao.jpeg';
-import rio from '../../assets/Loja/rio.jpeg';
-import robot from '../../assets/Loja/robot.jpeg';
+import { BUSCAR_ITENS_LOJA,COMPRAR_ITEM_LOJA,EQUIPAR_ITEM_ADQUIRIDO } from '../../api';
 import Button from '../Button';
+import { func } from 'prop-types';
 
 export const LojaOptions = () => {
-  return (
-    <section className={style.bg}>
-        
-        <div className={style.modalContainer}>
-            <div className={style.modal}>
-                <img src={astronauta} alt="Astronauta" />
-                <h1>Deseja comprar esse icone?</h1>
-                <div className={style.precoModal}>
-                    <p className={style.precoModalTexto}>20</p>
-                    <img src={moeda} alt="" />
-                </div>
-                <Button texto="Comprar"/>
-            </div>
-        </div>
 
-        <div className={style.grid + " container"}>
-            <div className={style.navLoja}>
-                <h1>Loja</h1>
-                <nav>
-                    <p className={style.active}>Icones</p>
-                    <p>Avatares</p>
-                    <p>Skins</p>
-                </nav>
-            </div>
-            <div className={style.gridCard}>
-                <div className={style.card}>
-                    <img src={astronauta} alt="Astronauta" />
-                    <p>Astronauta</p>
-                    <div className={style.preco}>
-                        <p>20</p>
+    const [loja, setLoja] = useState([]);
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [itemModal, setItemModal] = useState('null');
+    async function buscarConteudoLoja() {
+        const { url, options } = BUSCAR_ITENS_LOJA(sessionStorage.tokenBearer);
+        const response = await fetch(url, options);
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            setLoja(data);
+        }
+    }
+
+    async function comprarItem() {
+        const { url, options } = COMPRAR_ITEM_LOJA(sessionStorage.tokenBearer);
+        const response = await fetch(url, options);
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+        }
+    }
+
+    async function equiparItem(novaFoto) {
+        const { url, options } = EQUIPAR_ITEM_ADQUIRIDO(sessionStorage.tokenBearer, novaFoto)
+        const response = await fetch(url, options);
+        if (response.ok) {
+            sessionStorage.setItem('fotoPerfil', novaFoto);
+            console.log("foto alterada")
+            console.log(response)
+        }
+    }
+
+
+    useEffect(() => {
+        buscarConteudoLoja();
+    }, []);
+
+    useEffect(() => {
+        const fecharModalForaDoModal = (event) => {
+            const modalContainer = document.querySelector(`.${style.modalContainer}`);
+            if (modalContainer && !modalContainer.contains(event.target)) {
+                setMostrarModal(false);
+            }
+        };
+
+        if (mostrarModal) {
+            document.addEventListener('click', fecharModalForaDoModal);
+        }
+
+        return () => {
+            document.removeEventListener('click', fecharModalForaDoModal);
+        };
+    }, [mostrarModal]);
+
+    const abrirModal = (event, item) => {
+        event.stopPropagation();
+        setMostrarModal(true);
+        setItemModal(item);
+    };
+
+
+
+    return (
+        <section className={style.bg}>
+
+            <div className={style.modalContainer}>
+                <div className={style.modal} style={{ display: mostrarModal ? 'flex' : 'none' }}>
+                    <img src={`data:image/png;base64,${itemModal.fotoItem}`} alt={itemModal.descricaoItem} />
+                    <h1>Deseja comprar este item?</h1>
+                    <h1>{itemModal.nomeItem}</h1>
+                    <div className={style.precoModal}>
+                        <p className={style.precoModalTexto}>{itemModal.precoItem}</p>
                         <img src={moeda} alt="" />
                     </div>
-                </div>
-                <div className={style.card}>
-                    <img src={blackcat} alt="Gato preto" />
-                    <p>Gato Preto</p>
-                    <div className={style.preco}>
-                        <p>20</p>
-                        <img src={moeda} alt="" />
-                    </div>
-                </div>
-                <div className={style.card}>
-                    <img src={candy} alt="Doces" />
-                    <p>Doces</p>
-                    <div className={style.preco}>
-                        <p>20</p>
-                        <img src={moeda} alt="" />
-                    </div>
-                </div>
-                <div className={style.card}>
-                    <img src={astronauta} alt="Astronauta" />
-                    <p>Astronauta</p>
-                    <div className={style.preco}>
-                        <p>20</p>
-                        <img src={moeda} alt="" />
-                    </div>
-                </div>
-                <div className={style.card}>
-                    <img src={astronauta} alt="Astronauta" />
-                    <p>Astronauta</p>
-                    <div className={style.preco}>
-                        <p>20</p>
-                        <img src={moeda} alt="" />
-                    </div>
-                </div>
-                <div className={style.card}>
-                    <img src={astronauta} alt="Astronauta" />
-                    <p>Astronauta</p>
-                    <div className={style.preco}>
-                        <p>20</p>
-                        <img src={moeda} alt="" />
-                    </div>
-                </div>
-                <div className={style.card}>
-                    <img src={astronauta} alt="Astronauta" />
-                    <p>Astronauta</p>
-                    <div className={style.preco}>
-                        <p>20</p>
-                        <img src={moeda} alt="" />
-                    </div>
-                </div>
-                <div className={style.card}>
-                    <img src={astronauta} alt="Astronauta" />
-                    <p>Astronauta</p>
-                    <div className={style.preco}>
-                        <p>20</p>
-                        <img src={moeda} alt="" />
-                    </div>
-                </div>
-                <div className={style.card}>
-                    <img src={astronauta} alt="Astronauta" />
-                    <p>Astronauta</p>
-                    <div className={style.preco}>
-                        <p>20</p>
-                        <img src={moeda} alt="" />
-                    </div>
-                </div>
-                <div className={style.card}>
-                    <img src={astronauta} alt="Astronauta" />
-                    <p>Astronauta</p>
-                    <div className={style.preco}>
-                        <p>20</p>
-                        <img src={moeda} alt="" />
-                    </div>
-                </div>
-                <div className={style.card}>
-                    <img src={astronauta} alt="Astronauta" />
-                    <p>Astronauta</p>
-                    <div className={style.preco}>
-                        <p>20</p>
-                        <img src={moeda} alt="" />
-                    </div>
+                    <Button texto="Comprar" />
                 </div>
             </div>
-        </div>
-    </section>
-  )
+
+            <div className={style.grid + " container"}>
+                <div className={style.navLoja}>
+                    <h1>Loja</h1>
+                    <nav>
+                        <p className={style.active}>Icones</p>
+                        <p>Avatares</p>
+                        <p>Skins</p>
+                    </nav>
+                </div>
+
+                <div className={style.gridCard}>
+                    {loja.itensLoja?.map((itemLoja, index) => (
+                        <div className={style.card} key={index} onClick={itemLoja.adquirido ? () => console.log("item já adquirido") :(event) => abrirModal(event, itemLoja)}>
+                            <img src={`data:image/png;base64,${itemLoja.fotoItem}`} alt={`${itemLoja.descricaoItem}`} />
+                            <p>{itemLoja.nomeItem}</p>
+                            <div className={style.preco} style={{ display: itemLoja.adquirido ? 'none' : 'flex' }}>
+                                <p>{itemLoja.precoItem}</p>
+                                <img src={moeda} alt="" />
+                            </div>
+                            <div className={style.preco} style={{ display: itemLoja.adquirido ? 'flex' : 'none' }}>
+                                <div className={style.buttonEquipar}>
+                                    <Button type={true} value={"equipar"}  texto={"Equipar"} setValue={() => equiparItem(itemLoja.fotoItem)} />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )
 }
