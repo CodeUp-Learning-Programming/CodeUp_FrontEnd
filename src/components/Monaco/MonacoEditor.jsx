@@ -2,7 +2,7 @@ import Monaco, { useMonaco } from '@monaco-editor/react';
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from 'react';
 import TemasComprados from './TemasComprados';
-import { VALIDAR_EXERCICIO } from '../../api';
+import { VALIDAR_EXERCICIO, SALVAR_NA_PILHA, DESFAZER_PILHA, REFAZER_PILHA } from '../../api';
 
 import './monaco.css';
 
@@ -34,7 +34,7 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
   }
 
   async function validar() {
-    {handleSave}
+    { handleSave }
     var validar = document.getElementById("validar");
     validar.style.animation = 'trocarCores 2s infinite';
     if (!layout) {
@@ -57,8 +57,8 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
           console.log(data.resultado)
           console.log("ir para a proxima fase")
           setTimeout(() => {
-            sessionStorage.xp = Number(sessionStorage.xp)+Number(xp);
-            sessionStorage.moedas = Number(sessionStorage.moedas)+Number(moeda);
+            sessionStorage.xp = Number(sessionStorage.xp) + Number(xp);
+            sessionStorage.moedas = Number(sessionStorage.moedas) + Number(moeda);
             sessionStorage.qtdExerciciosFaseConcluidos++;
             window.location.reload();
             console.log("Trocando de fase")
@@ -89,8 +89,6 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
     }
 
   }
-
-
 
   function handleThemeChange() {
     console.log(selectTemas.options.select)
@@ -129,6 +127,47 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
     }
   }
 
+
+  async function salvar() {
+
+    const { url, options } = SALVAR_NA_PILHA(sessionStorage.tokenBearer, layout)
+
+    const response = await fetch(url, options);
+    if (response.ok) {
+      console.log("salvo")
+    }
+
+  }
+  async function desfazer() {
+
+    const { url, options } = DESFAZER_PILHA(sessionStorage.tokenBearer)
+
+    const response = await fetch(url, options);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data)
+      setLayout(data);
+    }else{
+      console.log("Não há o que desfazer")
+    }
+
+  }
+
+  async function refazer() {
+
+    const { url, options } = REFAZER_PILHA(sessionStorage.tokenBearer)
+
+    const response = await fetch(url, options);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data)
+      setLayout(data);
+    }else{
+      console.log("Não há o que refazer")
+    }
+
+  }
+
   return (
     <div className={classe}>
       <span className='monacoContainer'>
@@ -161,6 +200,9 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
             )}</div>
         </div>
         <div className='botoes'>
+          <button className='botao' onClick={salvar}>Salvar</button>
+          <button className='botao' onClick={desfazer}>Desfazer</button>
+          <button className='botao' onClick={refazer}>Refazer</button>
           <button className='botao' onClick={() => { mudarFase("voltar") }}>Voltar</button>
           <button className='botao' onClick={() => { mudarFase("avancar") }}>Proxima</button>
           <button className='botao' id='validar' onClick={validar}>Verificar</button>

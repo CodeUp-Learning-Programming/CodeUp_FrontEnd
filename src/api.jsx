@@ -125,7 +125,43 @@ export function USER_GET(body) {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json', 
             },
-            body: novaFoto ,
+            body: novaFoto,
+        },
+    };
+}
+
+  export function SALVAR_NA_PILHA(token, funcao) {
+    return {
+        url: API_URL + "/exercicios/salvaDefazer",
+        options: {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json', 
+            },
+            body: JSON.stringify(funcao),
+        },
+    };
+}
+  export function DESFAZER_PILHA(token) {
+    return {
+        url: API_URL + "/exercicios/desfazer",
+        options: {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        },
+    };
+}
+  export function REFAZER_PILHA(token) {
+    return {
+        url: API_URL + "/exercicios/refazer",
+        options: {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
         },
     };
 }
