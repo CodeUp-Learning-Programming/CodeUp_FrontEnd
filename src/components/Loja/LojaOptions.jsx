@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import style from './LojaOptions.module.css';
 import moeda from '../../assets/moeda.svg'
 import astronauta from '../../assets/Loja/astronauta.jpeg';
-import { BUSCAR_ITENS_LOJA,COMPRAR_ITEM_LOJA,EQUIPAR_ITEM_ADQUIRIDO } from '../../api';
+import { BUSCAR_ITENS_LOJA, COMPRAR_ITEM_LOJA, EQUIPAR_ITEM_ADQUIRIDO, USER_ATUALIZAR } from '../../api';
 import Button from '../Button';
 import { func } from 'prop-types';
 
@@ -21,12 +21,32 @@ export const LojaOptions = () => {
         }
     }
 
-    async function comprarItem() {
-        const { url, options } = COMPRAR_ITEM_LOJA(sessionStorage.tokenBearer);
+    async function atualizarInformacoes() {
+        const { url, options } = USER_ATUALIZAR(sessionStorage.tokenBearer, sessionStorage.id);
         const response = await fetch(url, options);
         if (response.ok) {
             const data = await response.json();
             console.log(data);
+            sessionStorage.setItem('nivel', data.nivel ?? 0);
+            sessionStorage.setItem('moedas', data.moedas ?? 0);
+            sessionStorage.setItem('xp', data.xp ?? 0);
+            const itensAdquiridos = JSON.stringify(data.itensAdquiridos);
+            sessionStorage.setItem('itensAdquiridos', itensAdquiridos);
+        } else {
+            console.log("Moedas Insuficientes!")
+        }
+    }
+
+
+    async function comprarItem(id) {
+        const { url, options } = COMPRAR_ITEM_LOJA(sessionStorage.tokenBearer, id);
+        const response = await fetch(url, options);
+        if (response.ok) {
+            atualizarInformacoes();
+            console.log(response);
+            console.log("Item comprado com sucesso!")
+        } else {
+            console.log("Moedas Insuficientes!")
         }
     }
 
@@ -82,7 +102,7 @@ export const LojaOptions = () => {
                         <p className={style.precoModalTexto}>{itemModal.precoItem}</p>
                         <img src={moeda} alt="" />
                     </div>
-                    <Button texto="Comprar" />
+                    <Button texto="Comprar" type={true} value={"equipar"} setValue={() => comprarItem(itemModal.id)} />
                 </div>
             </div>
 
@@ -98,7 +118,7 @@ export const LojaOptions = () => {
 
                 <div className={style.gridCard}>
                     {loja.itensLoja?.map((itemLoja, index) => (
-                        <div className={style.card} key={index} onClick={itemLoja.adquirido ? () => console.log("item já adquirido") :(event) => abrirModal(event, itemLoja)}>
+                        <div className={style.card} key={index} onClick={itemLoja.adquirido ? () => console.log("item já adquirido") : (event) => abrirModal(event, itemLoja)}>
                             <img src={`data:image/png;base64,${itemLoja.fotoItem}`} alt={`${itemLoja.descricaoItem}`} />
                             <p>{itemLoja.nomeItem}</p>
                             <div className={style.preco} style={{ display: itemLoja.adquirido ? 'none' : 'flex' }}>
@@ -107,7 +127,7 @@ export const LojaOptions = () => {
                             </div>
                             <div className={style.preco} style={{ display: itemLoja.adquirido ? 'flex' : 'none' }}>
                                 <div className={style.buttonEquipar}>
-                                    <Button type={true} value={"equipar"}  texto={"Equipar"} setValue={() => equiparItem(itemLoja.fotoItem)} />
+                                    <Button type={true} value={"equipar"} texto={"Equipar"} setValue={() => equiparItem(itemLoja.fotoItem)} />
                                 </div>
                             </div>
                         </div>

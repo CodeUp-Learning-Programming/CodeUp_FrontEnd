@@ -1,8 +1,6 @@
 export const API_URL = "http://localhost:8080";
 
 
-
-
 export function USER_CADASTRO(body) {
     return {
       url: API_URL + "/usuarios/cadastrar",
@@ -29,15 +27,15 @@ export function USER_CADASTRO(body) {
     };
   }
 
-export function USER_GET(body) {
+export function USER_ATUALIZAR(token, idUsuario) {
     return {
-      url: API_URL + "/usuarios",
+      url: API_URL + `/usuarios/atualizar/${idUsuario}`,
       options: {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(body),
       },
     };
   }
@@ -79,9 +77,9 @@ export function USER_GET(body) {
     };
   }
 
-  export function VALIDAR_EXERCICIO(token, layout) {
+  export function VALIDAR_EXERCICIO(token, layout, idExercicio, idFase) {
     return{
-      url: API_URL + "/testes/js?funcao="+`${encodeURIComponent(layout)}`,
+      url: API_URL + "/testes/js?funcao="+`${encodeURIComponent(layout)}&idExercicio=${idExercicio}&idFase=${idFase}`,
       options: {
         method: "GET",
         headers: {
@@ -104,9 +102,9 @@ export function USER_GET(body) {
    };
   }
 
-  export function COMPRAR_ITEM_LOJA(token) {
+  export function COMPRAR_ITEM_LOJA(token, idItem) {
     return{
-      url: API_URL + "/loja/comprar",
+      url: API_URL + `/loja/comprar/${idItem}`,
       options: {
         method: "POST",
         headers: {

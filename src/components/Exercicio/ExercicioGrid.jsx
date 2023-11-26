@@ -9,6 +9,11 @@ const ExercicioGrid = () => {
   const [exercicios, setExercicios] = useState([]);
   const [exercicioAtual, setExercicioAtual] = useState();
 
+  const atualizarConteudo = () => {
+    buscarExercicios();
+  };
+
+
   useEffect(() => {
     const fetchData = async () => {
       await buscarExercicios();
@@ -48,6 +53,9 @@ const ExercicioGrid = () => {
             moeda = {exercicios[exercicioAtual].moeda}
             xp = {exercicios[exercicioAtual].xp}
             className={style.terminal}
+            idFase={sessionStorage.faseSelecionadaId}
+            idExercicio={exercicios[exercicioAtual].id}
+            atualizarConteudo={atualizarConteudo}
           />
         </>
       ) : (

@@ -1,6 +1,6 @@
 import Monaco, { useMonaco } from '@monaco-editor/react';
 import { useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import TemasComprados from './TemasComprados';
 import { VALIDAR_EXERCICIO, SALVAR_NA_PILHA, DESFAZER_PILHA, REFAZER_PILHA } from '../../api';
 
@@ -8,7 +8,7 @@ import './monaco.css';
 
 
 
-function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
+function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, atualizarConteudo }) {
   //const [data, setData] = useState([]);
   // const lay = layoutFuncao.replace(/\\n/g, '\n')
   const monaco = useMonaco();
@@ -17,31 +17,26 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
   const [errorMessages, setErrorMessages] = useState([]);
   const [consoleMessages, setConsoleMessages] = useState([]);
   const navigate = useNavigate();
-  const editorRef = useRef(null);
+  const salvarComTimeOut = useRef(null);
 
-  const handleSave = () => {
-    //Salvar no banco assim
-    console.log(editorRef.current.getValue())
-  }
-
-  function handleEditorValidation(markers) {
-    // Filtra apenas os marcadores de erro
-    const errorMarkers = markers.filter((marker) => marker.severity === monaco.MarkerSeverity.Error);
-    // Obtém as mensagens de erro dos marcadores
-    const errorMessages = errorMarkers.map((marker) => marker.message);
-    // Atualiza o estado com as mensagens de erro
-    setErrorMessages(errorMessages);
-  }
+  // function handleEditorValidation(markers) {
+  //   // Filtra apenas os marcadores de erro
+  //   const errorMarkers = markers.filter((marker) => marker.severity === monaco.MarkerSeverity.Error);
+  //   // Obtém as mensagens de erro dos marcadores
+  //   const errorMessages = errorMarkers.map((marker) => marker.message);
+  //   // Atualiza o estado com as mensagens de erro
+  //   setErrorMessages(errorMessages);
+  // }
 
   async function validar() {
-    { handleSave }
+    console.log(layout)
     var validar = document.getElementById("validar");
     validar.style.animation = 'trocarCores 2s infinite';
     if (!layout) {
       setLayout(" ");
     }
     var layoutCerto = layoutFuncao.replace('{resposta}', `${layout}`);
-    const { url, options } = VALIDAR_EXERCICIO(sessionStorage.tokenBearer, layoutCerto)
+    const { url, options } = VALIDAR_EXERCICIO(sessionStorage.tokenBearer, layoutCerto, idExercicio, idFase)
 
     const response = await fetch(url, options);
     if (response.ok) {
@@ -50,6 +45,7 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
 
 
       var data = await response.json();
+      console.log(data)
       if (data.passou) {
         if (sessionStorage.qtdExerciciosFase == sessionStorage.qtdExerciciosFaseConcluidos) {
           console.log("Você já terminou essa fase!")
@@ -60,7 +56,8 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
             sessionStorage.xp = Number(sessionStorage.xp) + Number(xp);
             sessionStorage.moedas = Number(sessionStorage.moedas) + Number(moeda);
             sessionStorage.qtdExerciciosFaseConcluidos++;
-            window.location.reload();
+            atualizarConteudo
+            // window.location.reload();
             console.log("Trocando de fase")
           }, 1000);
         }
@@ -104,7 +101,6 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
     }
   }
 
-
   const mudarFase = (event) => {
     if (event === "voltar") {
       if (sessionStorage.qtdExerciciosFaseConcluidos - 1 < 0) {
@@ -127,17 +123,28 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
     }
   }
 
+  async function validarAntesDeSalvar(layout) {
+    setLayout(layout)
+    if (salvarComTimeOut.current) {
+      clearTimeout(salvarComTimeOut.current);
+    }
 
-  async function salvar() {
+    salvarComTimeOut.current = setTimeout(async () => {
+      await salvar(layout);
+      salvarComTimeOut.current = null;
+    }, 1000);
+  }
 
+  async function salvar(layout) {
+    setLayout(layout)
     const { url, options } = SALVAR_NA_PILHA(sessionStorage.tokenBearer, layout)
 
     const response = await fetch(url, options);
     if (response.ok) {
       console.log("salvo")
     }
-
   }
+
   async function desfazer() {
 
     const { url, options } = DESFAZER_PILHA(sessionStorage.tokenBearer)
@@ -179,15 +186,15 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
             theme={theme}
             defaultLanguage='javascript'
             value={layout}
-            onChange={(textoDigitado) => setLayout(textoDigitado)}
-            onValidate={handleEditorValidation}
+            onChange={(e) => validarAntesDeSalvar(e)}
+            // onValidate={handleEditorValidation}
           />
         </div>
         <div id='console' className='console'>
           {/* <TemasComprados handleThemeChange={handleThemeChange} /> */}
-          <div>
+          {/* <div> */}
             {consoleMessages}
-            {/* Exibe mensagens de erro */}
+            {/* Exibe mensagens de erro
             {errorMessages.length > 0 && (
               <div>
                 <h2>Mensagens de Erro:</h2>
@@ -197,8 +204,9 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda }) {
                   ))}
                 </ul>
               </div>
-            )}</div>
+            )}</div> */}
         </div>
+
         <div className='botoes'>
           <button className='botao' onClick={salvar}>Salvar</button>
           <button className='botao' onClick={desfazer}>Desfazer</button>

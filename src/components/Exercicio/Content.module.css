@@ -26,6 +26,8 @@
   margin: 10px 0;
 }
 .conteudo{
+  overflow-y: scroll;
+  max-height: 50vh;
   margin-top:1rem ;
   margin-bottom:1rem ;
 }
