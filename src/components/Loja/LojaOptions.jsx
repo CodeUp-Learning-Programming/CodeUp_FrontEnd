@@ -21,29 +21,35 @@ export const LojaOptions = () => {
         }
     }
 
-    async function atualizarInformacoes() {
-        const { url, options } = USER_ATUALIZAR(sessionStorage.tokenBearer, sessionStorage.id);
-        const response = await fetch(url, options);
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data);
-            sessionStorage.setItem('nivel', data.nivel ?? 0);
-            sessionStorage.setItem('moedas', data.moedas ?? 0);
-            sessionStorage.setItem('xp', data.xp ?? 0);
-            const itensAdquiridos = JSON.stringify(data.itensAdquiridos);
-            sessionStorage.setItem('itensAdquiridos', itensAdquiridos);
-        } else {
-            console.log("Moedas Insuficientes!")
-        }
-    }
+    // async function atualizarInformacoes() {
+    //     const { url, options } = USER_ATUALIZAR(sessionStorage.tokenBearer, sessionStorage.id);
+    //     const response = await fetch(url, options);
+    //     if (response.ok) {
+    //         const data = await response.json();
+    //         console.log(data);
+    //         sessionStorage.setItem('nivel', data.nivel ?? 0);
+    //         sessionStorage.setItem('moedas', data.moedas ?? 0);
+    //         sessionStorage.setItem('xp', data.xp ?? 0);
+    //         const itensAdquiridos = JSON.stringify(data.itensAdquiridos);
+    //         sessionStorage.setItem('itensAdquiridos', itensAdquiridos);
+    //     } else {
+    //         console.log("Moedas Insuficientes!")
+    //     }
+    // }
 
 
     async function comprarItem(id) {
         const { url, options } = COMPRAR_ITEM_LOJA(sessionStorage.tokenBearer, id);
         const response = await fetch(url, options);
         if (response.ok) {
-            atualizarInformacoes();
-            console.log(response);
+            //atualizarInformacoes();
+            const data = await response.json();
+            console.log(data)
+            sessionStorage.setItem('nivel', data.nivel ?? 0);
+            sessionStorage.setItem('moedas', data.moedas ?? 0);
+            sessionStorage.setItem('xp', data.xp ?? 0);
+            const itensAdquiridos = JSON.stringify(data.itensAdquiridos);
+            sessionStorage.setItem('itensAdquiridos', itensAdquiridos);
             console.log("Item comprado com sucesso!")
         } else {
             console.log("Moedas Insuficientes!")
@@ -110,9 +116,8 @@ export const LojaOptions = () => {
                 <div className={style.navLoja}>
                     <h1>Loja</h1>
                     <nav>
-                        <p className={style.active}>Icones</p>
-                        <p>Avatares</p>
-                        <p>Skins</p>
+                        <p className={style.active}>Imagens</p>
+                      
                     </nav>
                 </div>
 

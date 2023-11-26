@@ -1,4 +1,4 @@
-export const API_URL = "http://26.9.143.137:8080";
+export const API_URL = "http://26.110.23.43:8080";
 
 
 export function USER_CADASTRO(body) {
@@ -79,7 +79,7 @@ export function USER_ATUALIZAR(token, idUsuario) {
 
   export function VALIDAR_EXERCICIO(token, layout, idExercicio, idFase) {
     return{
-      url: API_URL + "/testes/js?funcao="+`${encodeURIComponent(layout)}&idExercicio=${idExercicio}&idFase=${idFase}`,
+      url: API_URL + "/exercicios/js?funcao="+`${encodeURIComponent(layout)}&idExercicio=${idExercicio}&idFase=${idFase}`,
       options: {
         method: "GET",
         headers: {

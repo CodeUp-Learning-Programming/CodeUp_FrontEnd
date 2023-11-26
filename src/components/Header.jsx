@@ -3,7 +3,7 @@ import { Link, useNavigate  } from "react-router-dom";
 import logo from '../assets/Codeup.png'
 import styles from './Header.module.css'
 import coin from '../assets/moeda.svg'
-import padrao from '../assets/Loja/halloween.jpg'
+import padrao from '../assets/padrao.jpeg'
 
 
 const Header = () => {
@@ -31,12 +31,12 @@ const Header = () => {
       <Link to={"/perfil"}>
       <p className={styles.p}>Meu Perfil</p>
      </Link>
-        <p className={styles.p}>{materiaSelecionada ? 
-        <Link to={"/roadmap"}>{materiaSelecionada}</Link> : ""}</p>
-        <p className={styles.p}>{ofensivaUsuario} dias</p>
+        {/* <p className={styles.p}>{materiaSelecionada ? 
+        <Link to={"/roadmap"}>{materiaSelecionada}</Link> : ""}</p> */}
+        {/* <p className={styles.p}>{ofensivaUsuario} dias</p> */}
         <p className={styles.p2}>{moeda} <img className={styles.moeda} src={coin} alt="Moeda"/></p>
         <Link to={"/perfil"}>
-        <img className={styles.imagem} src={`data:image/png;base64,${sessionStorage.fotoPerfil}`} alt="Circulo Cinza" />
+        <img className={styles.imagem} src={ sessionStorage.fotoPerfil == null ? `data:image/png;base64,${sessionStorage.fotoPerfil}`: padrao} alt="Circulo Cinza" />
         </Link>
       </nav>
     </div>
