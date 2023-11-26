@@ -52,6 +52,7 @@
     border-image-source: linear-gradient(90deg, rgba(0,226,242,1) 0%, rgba(0,127,251,1) 100%);
     border-image-slice: 1;
     background-color: black;
+    cursor: pointer;
 }
 
 .card img:nth-child(1){

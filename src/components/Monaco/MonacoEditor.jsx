@@ -208,7 +208,7 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
         </div>
 
         <div className='botoes'>
-          <button className='botao' onClick={salvar}>Salvar</button>
+          {/* <button className='botao' onClick={salvar}>Salvar</button> */}
           <button className='botao' onClick={desfazer}>Desfazer</button>
           <button className='botao' onClick={refazer}>Refazer</button>
           <button className='botao' onClick={() => { mudarFase("voltar") }}>Voltar</button>

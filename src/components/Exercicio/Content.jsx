@@ -15,9 +15,9 @@ const Content = ({ classe, titulo, totalExerciciosConcluidos, totalExercicios, c
       "switch": "#800080",
       "case": "#800080",
       "return": "#800080",
-      "const": "#00555D",
+      "const": "#e7760c",
       "let": "#0000FF",
-      "var": "#9D2235",
+      "var": "#e7b40c",
       "Object": "#008000",
       "Array": "#008000",
       "String": "#FF0000",
@@ -35,7 +35,7 @@ const Content = ({ classe, titulo, totalExerciciosConcluidos, totalExercicios, c
     return frase.split(/\b/).map((palavra, index) => {
       if (palavrasReservadas[palavra.toLowerCase()]) {
         return (
-          <span key={index} className={style.colorir} style={{ color: palavrasReservadas[palavra.toLowerCase()] }}>
+          <span key={index} className={style.colorir} style={{ color: palavrasReservadas[palavra.toLowerCase()], fontWeight: 600 }}>
             {palavra}
           </span>
         );
