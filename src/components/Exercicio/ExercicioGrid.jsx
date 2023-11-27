@@ -10,8 +10,8 @@ const ExercicioGrid = () => {
   const [exercicioAtual, setExercicioAtual] = useState();
 
   const atualizarConteudo = () => {
-    buscarExercicios();
-  };
+    setExercicioAtual(sessionStorage.exercicioAtual)
+    };
 
 
   useEffect(() => {
@@ -19,9 +19,7 @@ const ExercicioGrid = () => {
       await buscarExercicios();
     };
     
-    setExercicioAtual(sessionStorage.qtdExerciciosFaseConcluidos == sessionStorage.qtdExerciciosFase ?
-      sessionStorage.qtdExerciciosFase -1 : sessionStorage.qtdExerciciosFaseConcluidos != 0 ?
-      sessionStorage.qtdExerciciosFaseConcluidos: 0)
+    setExercicioAtual(sessionStorage.exercicioAtual);
     fetchData();
   }, [exercicioAtual]); // exercicioAtual adicionado como dependência
   

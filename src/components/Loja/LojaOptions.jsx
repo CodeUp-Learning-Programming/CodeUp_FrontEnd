@@ -51,9 +51,14 @@ export const LojaOptions = () => {
             const itensAdquiridos = JSON.stringify(data.itensAdquiridos);
             sessionStorage.setItem('itensAdquiridos', itensAdquiridos);
             console.log("Item comprado com sucesso!")
-        } else {
+            setMostrarModal(false);
+            buscarConteudoLoja()
+
+        }else{
             console.log("Moedas Insuficientes!")
+
         }
+
     }
 
     async function equiparItem(novaFoto) {

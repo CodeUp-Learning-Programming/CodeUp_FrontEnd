@@ -18,7 +18,7 @@ const PerfilBody = () => {
     <div className={style.bg}>
       <main className={style.main + " container"}>
           <VerticalContainer classe={style.perfil} nome={sessionStorage.nome} posicao={1} foto={fotoUsuario} />
-          <TopSideContainer classe={style.progresso} titulo={"Trilha Recente"} progresso={20}/>
+          <TopSideContainer classe={style.progresso} titulo={"Trilha Recente"} progresso={27}/>
           <BottomSideContainer classe={style.itens} titulo = {"Meus itens"} atualizarFotoUsuario={atualizarFotoUsuario} />
       </main>
     </div>

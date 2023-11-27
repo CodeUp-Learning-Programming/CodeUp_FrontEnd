@@ -24,8 +24,10 @@ const Trail = () => {
   }
 
   function redirectFase(id, qtdExerciciosFaseConcluidos, qtdExerciciosFase){
+    console.log(qtdExerciciosFaseConcluidos)
     sessionStorage.setItem('faseSelecionadaId', id)
     sessionStorage.setItem('qtdExerciciosFaseConcluidos', qtdExerciciosFaseConcluidos)
+    sessionStorage.setItem('exercicioAtual', qtdExerciciosFaseConcluidos == 0 ? 0 : --qtdExerciciosFaseConcluidos) 
     sessionStorage.setItem('qtdExerciciosFase', qtdExerciciosFase)
   }
 
@@ -40,25 +42,26 @@ const Trail = () => {
       <div className={styles.containerCards}>
       {fases.map((fase) => (
         console.log(fase),
+        fase.desbloqueada ?
         <Link onClick={() => redirectFase(fase.faseId, fase.qtdExerciciosFaseConcluidos, fase.qtdExerciciosFase)} to="/exercicio" key={fase.faseId}>
               <Card
                 id={fase.faseId}
                 titulo={fase.tituloFase}
                 subtitulo="Aprenda"
-                status={fase.qtdExerciciosFaseConcluidos >= fase.qtdExerciciosFase  && fase.qtdExerciciosFase != 0 || fase.numFase == 1? "on" : ""}
+                status={"on"}
                 />
-            </Link>
+            </Link> :
+             <Link key={fase.faseId}>
+             <Card
+               id={fase.faseId}
+               titulo={fase.tituloFase}
+               subtitulo="Aprenda"
+               status={""}
+               />
+           </Link>
           ))}
-        {/* <Link to="/exercicio">
-          <Card titulo="O Começo" subtitulo="Aprenda" status="on"/>
-        </Link>
-        
-        <Card titulo="O Começo" subtitulo="Aprenda" />
-        <Card titulo="O Começo" subtitulo="Aprenda" /> */}
         <div className={styles.barra}>
       </div>
-      
-
       </div>
     </div>
   </section>

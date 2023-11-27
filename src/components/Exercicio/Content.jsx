@@ -65,7 +65,7 @@ const Content = ({ classe, titulo, totalExerciciosConcluidos, totalExercicios, c
           {colorirPalavrasReservadas(item)}
           </p>
       ))}
-      <p>{desafio}</p>
+      {/* <p>{desafio}</p> */}
     </div>
   );
 };

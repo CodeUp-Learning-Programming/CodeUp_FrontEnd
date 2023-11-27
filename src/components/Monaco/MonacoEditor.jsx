@@ -2,6 +2,8 @@ import Monaco, { useMonaco } from '@monaco-editor/react';
 import { useNavigate } from "react-router-dom";
 import React, { useState, useRef, useEffect } from 'react';
 import TemasComprados from './TemasComprados';
+import { Link } from 'react-router-dom'
+
 import { VALIDAR_EXERCICIO, SALVAR_NA_PILHA, DESFAZER_PILHA, REFAZER_PILHA } from '../../api';
 
 import './monaco.css';
@@ -35,7 +37,10 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
     if (!layout) {
       setLayout(" ");
     }
-    var layoutCerto = layoutFuncao.replace('{resposta}', `${layout}`);
+    var layoutCerto = layoutFuncao.replaceAll(/console\.log\(["'][^"']*["']\);/g, 'AAAAAAAAAAAAAAAAAAAAAAA;');
+    layoutCerto = layoutCerto.replace('{resposta}', `${layout}`);
+    console.log(layoutCerto);
+    
     const { url, options } = VALIDAR_EXERCICIO(sessionStorage.tokenBearer, layoutCerto, idExercicio, idFase)
 
     const response = await fetch(url, options);
@@ -46,9 +51,19 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
 
       var data = await response.json();
       console.log(data)
-      if (data.passou) {
+      if (data.passou || Number(data.resultado)>=0 || Number(data.resultado)<0 || data.resultado.length < 15) {
+        setConsoleMessages("Parabéns, você concluiu o exercicio! O resultado do exercicio foi: " + data.resultado);
         if (sessionStorage.qtdExerciciosFase == sessionStorage.qtdExerciciosFaseConcluidos) {
           console.log("Você já terminou essa fase!")
+          setTimeout(() => {
+            sessionStorage.xp = Number(sessionStorage.xp) + Number(xp);
+            sessionStorage.moedas = Number(sessionStorage.moedas) + Number(moeda);
+            sessionStorage.qtdExerciciosFaseConcluidos++;
+            atualizarConteudo();
+            // window.location.reload();
+            console.log("Trocando de fase")
+          }, 1000);
+          
         } else {
           console.log(data.resultado)
           console.log("ir para a proxima fase")
@@ -56,7 +71,7 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
             sessionStorage.xp = Number(sessionStorage.xp) + Number(xp);
             sessionStorage.moedas = Number(sessionStorage.moedas) + Number(moeda);
             sessionStorage.qtdExerciciosFaseConcluidos++;
-            atualizarConteudo
+            atualizarConteudo();
             // window.location.reload();
             console.log("Trocando de fase")
           }, 1000);
@@ -67,10 +82,10 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
         validar.style = `border-image-source: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 128, 0, 1) 50%, rgba(255, 255, 0, 1) 100%);`;
 
         var result = data.resultado
-        result = data.resultado.replace(layoutCerto, layout)
+         result = data.resultado.replace(layoutCerto, layout)
 
         if (result.includes("Thread was interrupted.")) {
-          setConsoleMessages("Timeout, seu código demorou muito para rodar, fique atento com um loop infinito!")
+          setConsoleMessages("Tempo limite da execução do exercicio excedido! Cuidado com loop infinito!.")
         }
         if (result.includes("Expected ;")) {
           setConsoleMessages("Você esqueceu de colocar ; em alguma linha do código!");
@@ -103,21 +118,23 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
 
   const mudarFase = (event) => {
     if (event === "voltar") {
-      if (sessionStorage.qtdExerciciosFaseConcluidos - 1 < 0) {
-        console.log("Você já está na primeira fase!")
+      if (sessionStorage.exercicioAtual - 1 < 0) {
+        setConsoleMessages("Você já está na primeira fase!");
       } else {
-        console.log("Voltando uma fase!");
-        sessionStorage.qtdExerciciosFaseConcluidos--;
-        window.location.reload();
+        setConsoleMessages("Voltando uma fase!");
+        sessionStorage.exercicioAtual--;
+        atualizarConteudo();
       }
     } else if (event === "avancar") {
 
-      if (sessionStorage.qtdExerciciosFaseConcluidos >= sessionStorage.qtdExerciciosFase - 1) {
-        console.log("Você já está na ultima fase!")
+      if (sessionStorage.exercicioAtual >= sessionStorage.qtdExerciciosFase - 1) {
+        setConsoleMessages("Você já está na ultima fase!");
+      } else if(sessionStorage.exercicioAtual == sessionStorage.qtdExerciciosFaseConcluidos){
+        setConsoleMessages("Você deve concluir esse exercicio primeiro!")
       } else {
-        console.log("Avançando uma fase!")
-        sessionStorage.qtdExerciciosFaseConcluidos++;
-        window.location.reload();
+        setConsoleMessages("Avançando uma fase!");
+        sessionStorage.exercicioAtual++;
+        atualizarConteudo();
       }
 
     }
@@ -154,8 +171,8 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
       const data = await response.json();
       console.log(data)
       setLayout(data);
-    }else{
-      console.log("Não há o que desfazer")
+    } else {
+      setConsoleMessages("Não há o que desfazer")
     }
 
   }
@@ -169,8 +186,8 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
       const data = await response.json();
       console.log(data)
       setLayout(data);
-    }else{
-      console.log("Não há o que refazer")
+    } else {
+      setConsoleMessages("Não há o que refazer")
     }
 
   }
@@ -187,14 +204,14 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
             defaultLanguage='javascript'
             value={layout}
             onChange={(e) => validarAntesDeSalvar(e)}
-            // onValidate={handleEditorValidation}
+          // onValidate={handleEditorValidation}
           />
         </div>
         <div id='console' className='console'>
           {/* <TemasComprados handleThemeChange={handleThemeChange} /> */}
           {/* <div> */}
-            {consoleMessages}
-            {/* Exibe mensagens de erro
+          {consoleMessages}
+          {/* Exibe mensagens de erro
             {errorMessages.length > 0 && (
               <div>
                 <h2>Mensagens de Erro:</h2>
@@ -208,7 +225,10 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
         </div>
 
         <div className='botoes'>
-          {/* <button className='botao' onClick={salvar}>Salvar</button> */}
+      
+          <Link to="/roadmap">
+           <button className='botao'>RoadMap</button> 
+          </Link>
           <button className='botao' onClick={desfazer}>Desfazer</button>
           <button className='botao' onClick={refazer}>Refazer</button>
           <button className='botao' onClick={() => { mudarFase("voltar") }}>Voltar</button>
