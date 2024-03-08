@@ -1,0 +1,78 @@
+/* Header.module.css */
+
+.bg {
+    background-color: #3b4351;
+    color: #ffffff;
+    padding: 10px 0;
+  }
+  
+  /* .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  } */
+  
+  .logo {
+    width: 120px;
+  }
+  
+  .user-dropdown {
+    position: relative;
+  }
+  
+  .user-dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .avatar {
+    width: 30px;
+    border-radius: 50%;
+    height: 30px;
+   
+    border: solid 2px #ffffff;
+  }
+
+
+  
+  /* Header.module.css */
+
+.user-dropdown-container {
+    position: relative;
+  }
+  
+  .user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 5px); /* Posiciona o dropdown 5 pixels abaixo da foto do perfil */
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    min-width: 150px;
+    z-index: 1000; /* Garante que o dropdown esteja acima do conteúdo do cabeçalho */
+  }
+  
+  
+  .user-dropdown-menu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-dropdown-menu li {
+    margin-bottom: 10px;
+  }
+  
+  .user-dropdown-menu a {
+    text-decoration: none;
+    color: #333333;
+    font-size: 16px;
+  }
+  
+  .user-dropdown-menu a:hover {
+    color: #007bff;
+  }
+  
+  
