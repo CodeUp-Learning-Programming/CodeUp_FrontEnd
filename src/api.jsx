@@ -1,4 +1,4 @@
-export const API_URL = "http://44.195.37.238:8080";
+export const API_URL = "http://44.201.38.236:8080";
 
 
 export function USER_CADASTRO(body) {
