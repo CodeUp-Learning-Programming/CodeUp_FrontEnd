@@ -16,7 +16,7 @@ export const LojaOptions = () => {
         const response = await fetch(url, options);
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
+            console.log("Aqui está o os items da loja: " + data);
             setLoja(data);
         }
     }
@@ -106,7 +106,7 @@ export const LojaOptions = () => {
 
             <div className={style.modalContainer}>
                 <div className={style.modal} style={{ display: mostrarModal ? 'flex' : 'none' }}>
-                    <img src={`data:image/png;base64,${itemModal.fotoItem}`} alt={itemModal.descricaoItem} />
+                    <img src={itemModal.fotoItem} alt={itemModal.descricaoItem} />
                     <h1>Deseja comprar este item?</h1>
                     <h1>{itemModal.nomeItem}</h1>
                     <div className={style.precoModal}>
@@ -129,7 +129,7 @@ export const LojaOptions = () => {
                 <div className={style.gridCard}>
                     {loja.itensLoja?.map((itemLoja, index) => (
                         <div className={style.card} key={index} onClick={itemLoja.adquirido ? () => console.log("item já adquirido") : (event) => abrirModal(event, itemLoja)}>
-                            <img src={`data:image/png;base64,${itemLoja.fotoItem}`} alt={`${itemLoja.descricaoItem}`} />
+                            <img src={itemLoja.fotoItem} alt={`${itemLoja.descricaoItem}`} />
                             <p>{itemLoja.nomeItem}</p>
                             <div className={style.preco} style={{ display: itemLoja.adquirido ? 'none' : 'flex' }}>
                                 <p>{itemLoja.precoItem}</p>
