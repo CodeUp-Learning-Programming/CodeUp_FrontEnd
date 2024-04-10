@@ -102,19 +102,19 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
 
   }
 
-  function handleThemeChange() {
-    console.log(selectTemas.options.select)
-    if (selectedTheme === 'vs') {
-      monaco.editor.setTheme('vs');
-    } else if (selectedTheme === 'vs-dark') {
-      monaco.editor.setTheme('vs-dark');
-    } else if (selectedTheme === 'hc-black') {
-      monaco.editor.setTheme('hc-black');
-    } else {
-      monaco.editor.defineTheme('meu-tema', selectedTheme);
-      monaco.editor.setTheme('meu-tema');
-    }
-  }
+  // function handleThemeChange() {
+  //   console.log(selectTemas.options.select)
+  //   if (selectedTheme === 'vs') {
+  //     monaco.editor.setTheme('vs');
+  //   } else if (selectedTheme === 'vs-dark') {
+  //     monaco.editor.setTheme('vs-dark');
+  //   } else if (selectedTheme === 'hc-black') {
+  //     monaco.editor.setTheme('hc-black');
+  //   } else {
+  //     monaco.editor.defineTheme('meu-tema', selectedTheme);
+  //     monaco.editor.setTheme('meu-tema');
+  //   }
+  // }
 
   const mudarFase = (event) => {
     if (event === "voltar") {
@@ -225,12 +225,6 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
         </div>
 
         <div className='botoes'>
-      
-          <Link to="/roadmap">
-           <button className='botao'>RoadMap</button> 
-          </Link>
-          <button className='botao' onClick={desfazer}>Desfazer</button>
-          <button className='botao' onClick={refazer}>Refazer</button>
           <button className='botao' onClick={() => { mudarFase("voltar") }}>Voltar</button>
           <button className='botao' onClick={() => { mudarFase("avancar") }}>Proxima</button>
           <button className='botao' id='validar' onClick={validar}>Verificar</button>

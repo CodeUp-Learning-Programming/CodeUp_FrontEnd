@@ -21,8 +21,8 @@ function UserDropdownMenu() {
       {isOpen && (
         <div className="user-dropdown-menu">
           <ul>
-            <li><a href="/perfil">Profile</a></li>
-            <li><a href="/login" onClick={handleLogout}>Sign Out</a></li>
+            <li><a href="/perfil" className='text-drop-box'>Perfil</a></li>
+            <li><a href="/login" className='text-drop-box' onClick={handleLogout}>Sair</a></li>
             {/* Adicione outras opções de menu aqui, se necessário */}
           </ul>
         </div>

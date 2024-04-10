@@ -28,11 +28,10 @@
   
   .avatar {
     width: 40px;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     height: 40px;
+    border: solid 1.5px #5a5a5a;
   }
-
-
   
   /* Header.module.css */
 
@@ -44,14 +43,16 @@
     position: absolute;
     top: calc(100% + 5px); /* Posiciona o dropdown 5 pixels abaixo da foto do perfil */
     right: 0;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #000000;
+    border: 1.5px solid #007FFB; /* Adicione a cor aqui */
+    border-image-source: linear-gradient(90deg, rgba(0, 226, 242, 1) 0%, rgba(0, 127, 251, 1) 100%);
+    border-image-slice: 1;
+    border-radius: 15px;
     padding: 10px;
-    min-width: 150px;
+    min-width: 130px;
     z-index: 1000; /* Garante que o dropdown esteja acima do conteúdo do cabeçalho */
   }
+  
   
   
   .user-dropdown-menu ul {
@@ -63,14 +64,22 @@
     margin-bottom: 10px;
   }
   
-  .user-dropdown-menu a {
+  /* .user-dropdown-menu a {
     text-decoration: none;
     color: #333333;
     font-size: 16px;
-  }
+  } */
   
-  .user-dropdown-menu a:hover {
+  /* .user-dropdown-menu a:hover {
     color: #007bff;
+  } */
+
+  .text-drop-box{
+    background: -webkit-linear-gradient(360deg, rgba(0, 226, 242, 1) 0%, rgba(0, 127, 251, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* font-weight: 600; */
+    /* font-size: 2rem; */
   }
   
   
