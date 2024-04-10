@@ -27,11 +27,9 @@
   }
   
   .avatar {
-    width: 30px;
+    width: 40px;
     border-radius: 50%;
-    height: 30px;
-   
-    border: solid 2px #ffffff;
+    height: 40px;
   }
 
 
