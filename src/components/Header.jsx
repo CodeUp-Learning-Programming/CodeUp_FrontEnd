@@ -23,6 +23,10 @@ const Header = () => {
         </Link>
 
         <nav className={styles.nav}>
+
+        <Link to="/roadmap">
+        <p className={styles.p}>Roadmap</p>
+          </Link>
           <Link to={"/loja"}>
             <p className={styles.p}>Loja</p>
           </Link>
