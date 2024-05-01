@@ -1,4 +1,4 @@
-export const API_URL = "http://10.18.32.128:8080/api";
+export const API_URL = "http://localhost:8080/api";
 
 
 export function USER_CADASTRO(body) {
@@ -52,6 +52,7 @@ export function USER_ATUALIZAR(token, idUsuario) {
       },
     };
   }
+
 
   export function GET_FASES_MATERIA(token,idMateriaSelecionada) {
     return {
@@ -114,7 +115,8 @@ export function USER_ATUALIZAR(token, idUsuario) {
    };
   }
 
-  export function EQUIPAR_ITEM_ADQUIRIDO(token, novaFoto) {
+  export function EQUIPAR_ITEM_ADQUIRIDO(token, body) {
+    console.log("A foto nova é " +  body.image)
     return {
         url: API_URL + "/usuarios/foto",
         options: {
@@ -123,7 +125,7 @@ export function USER_ATUALIZAR(token, idUsuario) {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json', 
             },
-            body: novaFoto,
+            body: JSON.stringify(body),
         },
     };
 }

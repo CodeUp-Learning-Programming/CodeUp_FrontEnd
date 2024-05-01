@@ -62,7 +62,9 @@ export const LojaOptions = () => {
     }
 
     async function equiparItem(novaFoto) {
-        const { url, options } = EQUIPAR_ITEM_ADQUIRIDO(sessionStorage.tokenBearer, novaFoto)
+        const { url, options } = EQUIPAR_ITEM_ADQUIRIDO(sessionStorage.tokenBearer,{
+            "image": novaFoto
+          })
         const response = await fetch(url, options);
         if (response.ok) {
             sessionStorage.setItem('fotoPerfil', novaFoto);

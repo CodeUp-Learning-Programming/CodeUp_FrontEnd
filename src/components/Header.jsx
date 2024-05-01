@@ -36,7 +36,7 @@ const Header = () => {
         {/* <p className={styles.p}>{ofensivaUsuario} dias</p> */}
         <p className={styles.p2}>{moeda} <img className={styles.moeda} src={coin} alt="Moeda"/></p>
         <Link to={"/perfil"}>
-        <img className={styles.imagem} src={ `data:image/png;base64,${sessionStorage.fotoPerfil}` ?? padrao} alt="Circulo Cinza" />
+        <img className={styles.imagem} src={ sessionStorage.fotoPerfil ?? padrao} alt="Circulo Cinza" />
         </Link>
       </nav>
     </div>
