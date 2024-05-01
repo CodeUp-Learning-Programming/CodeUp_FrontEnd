@@ -30,7 +30,7 @@ const BottomSideContainer = ({ titulo, classe, atualizarFotoUsuario  }) => {
       <div className={style.lista}>
         {itensComprados.map((item, index) => (
           <div className={style.item} key={index} onClick={() => equiparItem(item.fotoItem)}>
-            <img src={`data:image/png;base64,${item.fotoItem}`} alt={item.nomeItem} />
+            <img src={`${item.fotoItem}`} alt={item.nomeItem} />
           </div>
         ))}
       </div>

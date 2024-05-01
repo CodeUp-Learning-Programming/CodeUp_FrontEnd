@@ -20,6 +20,7 @@ const PerfilBody = () => {
           <VerticalContainer classe={style.perfil} nome={sessionStorage.nome} posicao={1} foto={fotoUsuario} />
           <TopSideContainer classe={style.progresso} titulo={"Trilha Recente"} progresso={27}/>
           <BottomSideContainer classe={style.itens} titulo = {"Meus itens"} atualizarFotoUsuario={atualizarFotoUsuario} />
+
       </main>
     </div>
   )

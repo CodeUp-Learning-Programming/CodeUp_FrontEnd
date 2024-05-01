@@ -17,13 +17,12 @@ const Header = () => {
 
   return (
     <header className={styles.bg}>
-      <div className={styles.header + ' container'}>
-        <Link to={"/menu"}>
-          <img className={styles.logo} src={logo} alt="Logo CodeUp" />
-        </Link>
 
+    <div className={styles.header + ' container'}>
+    <Link to={"/menu"}>
+      <img className={styles.logo} src={logo} alt="Logo CodeUp" />
+    </Link>
         <nav className={styles.nav}>
-
         <Link to="/roadmap">
         <p className={styles.p}>Roadmap</p>
           </Link>
