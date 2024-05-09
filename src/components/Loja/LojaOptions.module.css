@@ -53,6 +53,7 @@
     border-image-slice: 1;
     background-color: black;
     cursor: pointer;
+    max-width: 300px;
 }
 
 .card img:nth-child(1){
