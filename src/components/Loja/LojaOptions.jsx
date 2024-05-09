@@ -133,7 +133,7 @@ export const LojaOptions = () => {
                         itemLoja.tipoItem === "Foto de Perfil" && (
                         <div className={style.card} key={index} onClick={itemLoja.adquirido ? () => console.log("item já adquirido") : (event) => abrirModal(event, itemLoja)}>
                             <img src={itemLoja.fotoItem} alt={`${itemLoja.descricaoItem}`} />
-                            <p>{itemLoja.nomeItem}</p>
+                            <p className={style.nomeItem}>{itemLoja.nomeItem}</p>
                             <div className={style.preco} style={{ display: itemLoja.adquirido ? 'none' : 'flex' }}>
                                 <p>{itemLoja.precoItem}</p>
                                 <img src={moeda} alt="" />
