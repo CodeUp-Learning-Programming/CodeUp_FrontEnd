@@ -24,14 +24,10 @@ jobs:
         run: |
           npm i
           npm run build
-          pwd
-          ls
       - name: CD FRONT
         run: |
+          export pasta-atual=$(pwd)
           cd /var/www/html
-          ls
           sudo rm -r * 
-          pwd
-          cd ./dist
-          pwd
+          cd $pasta-atual/dist
           sudo cp -r * /var/www/html
