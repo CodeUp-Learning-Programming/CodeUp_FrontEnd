@@ -29,6 +29,9 @@ jobs:
       - name: CD FRONT
         run: |
           cd /var/www/html
-          sudo rm -r *
+          ls
+          sudo rm -r * 
+          pwd
           cd ./dist
+          pwd
           sudo cp -r * /var/www/html
