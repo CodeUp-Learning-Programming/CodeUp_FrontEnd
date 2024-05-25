@@ -10,26 +10,30 @@
     gap: 16px;
     min-height: calc(100vh - 37px );
     color: white;
+    padding: 80px 0;
 }
 
 .estudo{
     text-align: center;
-    background-color: black;
     grid-area: estudo;
-    margin-top: 80px;
+    display: block;
+}
+
+.estudo2{
+    height: 100%;
+    
 }
 
 .emBreve{
     grid-area: em-breve;
-    background-color: black;
 }
 
 .emBreve2{
     grid-area: em-breve2;
-    background-color: black;
+    
 }
 
 .emBreve3{
     grid-area: em-breve3;
-    background-color: black;
+    
 }

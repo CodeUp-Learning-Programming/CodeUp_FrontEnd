@@ -1,0 +1,17 @@
+.div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(0,226,242,1) 0%, rgba(0,127,251,1) 100%);
+    border-image-slice: 1;
+    background-color: black;
+}
+
+.titulo{
+    background: -webkit-linear-gradient(360deg, rgba(0, 226, 242, 1) 0%, rgba(0, 127, 251, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    font-size: 2rem;
+}

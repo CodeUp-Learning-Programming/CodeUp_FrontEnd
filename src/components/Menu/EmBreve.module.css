@@ -1,0 +1,13 @@
+.titulo{
+    font-weight: 600;
+    font-size: 2rem;
+    color: #9F9F9F;
+}
+
+.div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #9F9F9F;
+    background-color: #313131;
+}

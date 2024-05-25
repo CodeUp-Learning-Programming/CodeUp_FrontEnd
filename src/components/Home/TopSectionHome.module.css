@@ -1,0 +1,32 @@
+.main{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 40rem;
+  background-color: #101010;
+}
+.leftBox{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-bottom: 80px;
+}
+
+.button{
+  display: flex;
+  align-self: flex-start;
+}
+
+.titulo{
+  color: #FFF;
+  font-size: 2.25rem;
+  font-family: Poppins;
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+
+.background{
+  background-color: #101010;
+}
+

@@ -1,0 +1,18 @@
+.grid{
+  display: grid;
+    grid-template-areas: 
+    "content terminal";
+    gap: 1px;
+}
+
+.content{
+  grid-area: content;
+}
+
+.terminal{
+  grid-area: terminal;
+}
+
+.answer{
+  grid-area: answer;
+}

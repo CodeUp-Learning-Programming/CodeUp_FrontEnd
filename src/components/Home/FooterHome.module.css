@@ -1,0 +1,19 @@
+.footer{
+  height: 14.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  flex-direction: column;
+  background-color: #1C1C1C;
+}
+.logo{
+  padding-top: 4rem;
+}
+.footerMensagem{
+  display: flex;
+  height: 6rem;
+  justify-content: center;
+  align-items:end;
+  color: #FFFFFF;
+}
+

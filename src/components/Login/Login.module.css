@@ -6,13 +6,15 @@
 
 .nav{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 30px;
     margin-bottom: 20px;
+    padding: 0;
 }
 
 .link{
     align-self: flex-start;
+    
 }
 
 .link::before{
@@ -73,6 +75,18 @@
 }
 
 .date{
-    min-width: 240px;
     font-size: 0.8rem;
+}
+
+.aviso {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f44336; /* Vermelho */
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    z-index: 1000;
+    width: 100%;
 }
