@@ -16,6 +16,11 @@ jobs:
 
 
     steps:
+    - run: cd /var/www/html
+    - run: sudo rm -r *
+    - run: cd
+    - run: mkdir ${{ GITHUB-SHA }}-FRONT
+    - run: cd ${{ GITHUB-SHA }}-FRONT
     - uses: actions/checkout@v4
     - name: Use Node.js 
       uses: actions/setup-node@v3
@@ -25,3 +30,5 @@ jobs:
     - run: npm i
     - run: npm run build 
     - run: pwd
+    - run: cd dist
+    - run: sudo cp -r * /var/www/html
