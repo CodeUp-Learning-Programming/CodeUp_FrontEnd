@@ -30,4 +30,5 @@ jobs:
         run: |
           cd /var/www/html
           sudo rm -r *
-          sudo cp -r ./dist/* /var/www/html
+          cd ./dist
+          sudo cp -r * /var/www/html
