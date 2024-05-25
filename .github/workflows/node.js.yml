@@ -26,8 +26,8 @@ jobs:
           npm run build
       - name: CD FRONT
         run: |
-          export pasta-atual=$(pwd)
+          export atual=$(pwd)
           cd /var/www/html
           sudo rm -r * 
-          cd $pasta-atual/dist
+          cd $atual/dist
           sudo cp -r * /var/www/html
