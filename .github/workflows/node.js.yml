@@ -19,8 +19,8 @@ jobs:
     - run: cd /var/www/html
     - run: sudo rm -r *
     - run: cd
-    - run: mkdir ${{ GITHUB-SHA }}-FRONT
-    - run: cd ${{ GITHUB-SHA }}-FRONT
+    - run: mkdir ${{ github.sha }}-FRONT
+    - run: cd ${{ github.sha }}-FRONT
     - uses: actions/checkout@v4
     - name: Use Node.js 
       uses: actions/setup-node@v3
