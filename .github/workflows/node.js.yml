@@ -31,4 +31,5 @@ jobs:
     - run: npm run build 
     - run: pwd
     - run: cd dist
+    - run: pwd
     - run: sudo cp -r * /var/www/html
