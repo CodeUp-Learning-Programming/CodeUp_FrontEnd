@@ -1,6 +1,3 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
@@ -16,20 +13,21 @@ jobs:
 
 
     steps:
-    - run: cd /var/www/html
-    - run: sudo rm -r *
-    - run: cd
-    - run: mkdir ${{ github.sha }}-FRONT
-    - run: cd ${{ github.sha }}-FRONT
-    - uses: actions/checkout@v4
-    - name: Use Node.js 
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.X
-        cache: 'npm'
-    - run: npm i
-    - run: npm run build 
-    - run: pwd
-    - run: cd dist
-    - run: pwd
-    - run: sudo cp -r * /var/www/html
+      - name: Clone Repositório
+        uses: actions/checkout@v4
+      - name: Use Node.js 
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.X
+          cache: 'npm'
+      - name: CI APP
+        run: |
+          npm i
+          npm run build
+          pwd
+          ls
+      - name: CD FRONT
+        run: |
+          cd /var/www/html
+          sudo rm -r *
+          sudo cp -r ./dist/* /var/www/html
