@@ -40,7 +40,7 @@ export const BottomSectionHome = () => {
 
           <div className={style.textBox}>
             <div className={style.tituloLaranja}>
-              Gameficação
+              Gratuidade
             </div>
             <div className={style.text}>
             Comece a estudar agora mesmo com o nosso plano gratuito.
