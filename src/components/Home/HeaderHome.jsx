@@ -11,8 +11,8 @@ export const HeaderHome = () => {
         <img src={logo} alt="Logo CodeUp" />
         <nav className={style.nav}>
           <Link to="/">Metodologia</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/login">
+          <Link to="/login/true">Login</Link>
+          <Link to="/login/false">
             <Button texto="Cadastre-se"/>
           </Link>
         </nav>
