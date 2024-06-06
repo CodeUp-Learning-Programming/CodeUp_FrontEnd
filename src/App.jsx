@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Monaco from "./components/Monaco/MonacoEditor.jsx";
 import Home from "./components/Home/Home";
@@ -16,7 +17,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login/:initialLoginCadastro" element={<Login />} />
           <Route path="/menu" element={<Menu />}/>
           <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/terminal" element={<Monaco />} />
