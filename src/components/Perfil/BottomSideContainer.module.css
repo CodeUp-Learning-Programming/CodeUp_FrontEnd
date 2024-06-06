@@ -1,0 +1,42 @@
+.borda {
+    background-color: #000000;
+    border: 1px solid;
+    border-image: linear-gradient(90deg, #009BF2 0%, #0064FA 100%);
+    border-image-slice: 1;
+    width: 100%;
+    padding: 15px 20px;
+}
+
+.titulo {
+    width: 45rem;
+    color: #FFF;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.lista{
+    display: flex;
+    flex-wrap: wrap;
+    overflow: scroll;
+    max-height: 26vh;
+    gap: 20px;
+    padding: 10px;
+    border-image: #2A2A2A;
+    
+}
+
+.item {
+    width: 5rem;
+    height: 5rem;   
+    flex-shrink: 0;
+    background: #2A2A2A;
+
+}
+
+.item:hover {
+    transform: scale(1.2);
+    border: 5px solid;
+    border-image: linear-gradient(90deg, #009BF2 0%, #0064FA 100%);
+    border-image-slice: 1;
+}

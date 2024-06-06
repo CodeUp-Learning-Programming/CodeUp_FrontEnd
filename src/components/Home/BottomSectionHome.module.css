@@ -1,0 +1,77 @@
+.main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40rem;
+  background-color: #151515;
+}
+
+.titulo{
+  font-size: 36px;
+  align-self: flex-start;
+  padding-left: 30px;
+  color: #FFF;
+  font-weight: 600;
+}
+
+.bottom{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 70rem;
+  height: 30rem;
+}
+
+.box{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 20rem;
+  height: 25rem;
+}
+
+.tituloRoxo{
+  font-size: 30px;
+  background: linear-gradient(90deg, #FF00F4 0%, #BC00FF 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+.tituloRosa{
+  font-size: 30px;
+  background: linear-gradient(90deg, #FF003D 0%, #FF00B8 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+.tituloLaranja{
+  font-size: 30px;
+  background: linear-gradient(90deg, #F90 0%, #FF4500 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+.tituloVerde{
+  font-size: 30px;
+  background: linear-gradient(90deg, #00F678 0%, #00FECA 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+.text{
+  font-size: 16px;
+  color: #FFF;
+}
+
+.background{
+  background-color: #151515;
+}

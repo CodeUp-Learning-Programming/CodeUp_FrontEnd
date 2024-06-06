@@ -1,0 +1,30 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #101010;
+    height: 55.9rem;
+}
+.centerText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+.bottomText{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10rem;
+    width: 30rem;
+}
+.texto{
+    color: #FFFFFF;
+    font-size: 36px;
+}
+
+.img{
+
+}

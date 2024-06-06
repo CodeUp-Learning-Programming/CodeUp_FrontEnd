@@ -1,23 +1,81 @@
-.monacoContainer{
-display: flex;
+.monacoContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: #101010;
 }
-.monaco{
-    width: 50vw;
-    height: 100vh;
+
+/* .monaco{
+    width: 20vw;
+    height: 10vh;
+} */
+.titulo {
+    display: inline;
+    background-color: #1E1e1e;
+    color: #FFB800;
+    padding: 0px 20px 1px 20px;
+
 }
-.console{
+
+.titulo span {
+    font-weight: 600;
+
+}
+
+.console {
+
     width: 50vw;
-    height: 100vh;
-    background-color: #111111;
+    height: calc(31vh - 64px);
+    background-color: #101010;
     color: #FFF;
 }
 
-.botao{
-    width: 120px;
+.botoes {
+    display: flex;
+    align-self: end;
+}
+
+.botao {
+    align-self: flex-end;
+    min-width: 80px;
     height: 40px;
+    margin-right: 20px;
+    margin-bottom: 20px;
     border: 1px solid #FFF;
     background-color: #000000;
     cursor: pointer;
     color: #FFF;
     font-size: 16px;
+    border-image-slice: 1;
+}
+
+@keyframes trocarCores {
+    0% {
+        border-image-source: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+    }
+
+    25% {
+        border-image-source: linear-gradient(90deg, #009BF2 0%, #0064FA 100%);
+
+    }
+
+    50% {
+        border-image-source: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+    }
+
+    75% {
+        border-image-source: linear-gradient(90deg, #009BF2 0%, #0064FA 100%);
+
+    }
+
+    100% {
+        border-image-source: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+    }
+}
+
+.botao:hover {
+    animation: trocarCores 2s infinite;
+    /* Adiciona uma animação que dura 3 segundos e se repete infinitamente */
+}
+.validar{
+    animation: none;
 }

@@ -1,193 +1,242 @@
 import Monaco, { useMonaco } from '@monaco-editor/react';
-import { useState, useRef, useEffect } from 'react';
-import api from '../../api'
+import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from 'react';
+import TemasComprados from './TemasComprados';
+import { Link } from 'react-router-dom'
 
-import Amy from './themes/Amy.json';
-import MonokaiBrightTheme from './themes/Monokai Bright.json';
-import Monokai from './themes/Monokai.json';
+import { VALIDAR_EXERCICIO, SALVAR_NA_PILHA, DESFAZER_PILHA, REFAZER_PILHA } from '../../api';
 
 import './monaco.css';
 
-function MonacoEditor() {
-  const [data, setData] = useState([]);
+
+
+function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, atualizarConteudo }) {
+  //const [data, setData] = useState([]);
+  // const lay = layoutFuncao.replace(/\\n/g, '\n')
   const monaco = useMonaco();
-  const [conteudoMonaco, setConteudoMonaco] = useState('function{\n}');
+  const [layout, setLayout] = useState("");
   const [theme, setTheme] = useState('vs-dark'); // Initialize with vs-dark theme
   const [errorMessages, setErrorMessages] = useState([]);
   const [consoleMessages, setConsoleMessages] = useState([]);
+  const navigate = useNavigate();
+  const salvarComTimeOut = useRef(null);
 
-  
+  // function handleEditorValidation(markers) {
+  //   // Filtra apenas os marcadores de erro
+  //   const errorMarkers = markers.filter((marker) => marker.severity === monaco.MarkerSeverity.Error);
+  //   // Obtém as mensagens de erro dos marcadores
+  //   const errorMessages = errorMarkers.map((marker) => marker.message);
+  //   // Atualiza o estado com as mensagens de erro
+  //   setErrorMessages(errorMessages);
+  // }
 
-    function buscarFase() {
+  async function validar() {
+    console.log(layout)
+    var validar = document.getElementById("validar");
+    validar.style.animation = 'trocarCores 2s infinite';
+    if (!layout) {
+      setLayout(" ");
+    }
+    var layoutCerto = layoutFuncao.replaceAll(/console\.log\(["'][^"']*["']\);/g, 'AAAAAAAAAAAAAAAAAAAAAAA;');
+    layoutCerto = layoutCerto.replace('{resposta}', `${layout}`);
+    console.log(layoutCerto);
+    
+    const { url, options } = VALIDAR_EXERCICIO(sessionStorage.tokenBearer, layoutCerto, idExercicio, idFase)
 
-      const config = {
-        method: 'GET',
-        url: `/fases/${sessionStorage.faseSelecionada}`,
-        headers: {
-          'Authorization': `Bearer ${sessionStorage.tokenBearer}` // Aqui, adicionamos o token Bearer ao cabeçalho Authorization
+    const response = await fetch(url, options);
+    if (response.ok) {
+      validar.style.animation = 'none';
+      validar.style = `border-image-source: linear-gradient(90deg, rgba(0,226,242,1) 0%, rgba(0,127,251,1) 100%);`;
+
+
+      var data = await response.json();
+      console.log(data)
+      if (data.passou || Number(data.resultado)>=0 || Number(data.resultado)<0 || data.resultado.length < 15) {
+        setConsoleMessages("Parabéns, você concluiu o exercicio! O resultado do exercicio foi: " + data.resultado);
+        if (sessionStorage.qtdExerciciosFase == sessionStorage.qtdExerciciosFaseConcluidos) {
+          console.log("Você já terminou essa fase!")
+          setTimeout(() => {
+            sessionStorage.xp = Number(sessionStorage.xp) + Number(xp);
+            sessionStorage.moedas = Number(sessionStorage.moedas) + Number(moeda);
+            sessionStorage.qtdExerciciosFaseConcluidos++;
+            atualizarConteudo();
+            // window.location.reload();
+            console.log("Trocando de fase")
+          }, 1000);
+          
+        } else {
+          console.log(data.resultado)
+          console.log("ir para a proxima fase")
+          setTimeout(() => {
+            sessionStorage.xp = Number(sessionStorage.xp) + Number(xp);
+            sessionStorage.moedas = Number(sessionStorage.moedas) + Number(moeda);
+            sessionStorage.qtdExerciciosFaseConcluidos++;
+            atualizarConteudo();
+            // window.location.reload();
+            console.log("Trocando de fase")
+          }, 1000);
         }
-      };
-  
-      api(config)
-      .then((respostaObtida) => {
-      // cairá aqui se a requisição for realizada;
-      console.log(respostaObtida);
-      // objeto que representa a resposta enviada pela API;
-      console.log(respostaObtida.status);
-      // vendo status da resposta (OK - 200);
-      console.log(respostaObtida.data);
-      // vendo os dados da resposta (data: []);
 
-      setConteudoMonaco(respostaObtida.data.conteudo_exec)
-      setData(respostaObtida.data)
-      // setando "musicas" com os mesmos dados recebidos pela resposta da requisição;
-      })
-      .catch((erroOcorrido) => { // cairá aqui se houver algum erro durante a requisição
-      console.log(erroOcorrido);
-      })
+      } else {
+        validar.style.animation = 'none';
+        validar.style = `border-image-source: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 128, 0, 1) 50%, rgba(255, 255, 0, 1) 100%);`;
+
+        var result = data.resultado
+         result = data.resultado.replace(layoutCerto, layout)
+
+        if (result.includes("Thread was interrupted.")) {
+          setConsoleMessages("Tempo limite da execução do exercicio excedido! Cuidado com loop infinito!.")
+        }
+        if (result.includes("Expected ;")) {
+          setConsoleMessages("Você esqueceu de colocar ; em alguma linha do código!");
+        }
+
+        if (result.includes("ReferenceError:") && result.includes("is not defined")) {
+          result = result.replace("ReferenceError:", "")
+          result = result.replace("is not defined", "")
+          setConsoleMessages(`A variável${result}não está definida (undefined)`)
+        }
       }
 
-  const editorRef = useRef(null);
-
-  const handleSave = () => {
-    //Salvar no banco assim
-    console.log(editorRef.current.getValue())
-  }
-
-  function handleEditorValidation(markers) {
-    // Filtra apenas os marcadores de erro
-    const errorMarkers = markers.filter((marker) => marker.severity === monaco.MarkerSeverity.Error);
-
-    // Obtém as mensagens de erro dos marcadores
-    const errorMessages = errorMarkers.map((marker) => marker.message);
-
-    // Atualiza o estado com as mensagens de erro
-    setErrorMessages(errorMessages);
-  }
-
-  function validar(){
-
-    // Pega o conteudo do editor
-    var conteudo = editorRef.current.getValue(); 
-
-    // Números para fazer o teste
-    const listaNumeros = [5,6,7,8,9,10,11,22,13,14];
-
-    // Total de acertos necessários para passar 
-    const acertosNecessarios = 5;
-    let acertosTotais = 0;
-
-    // Inicio dos testes
-    for(var i = 0; i < listaNumeros.length; i+=2){
-      
-      //Chamando a função digitada
-      const exec = `
-      ${conteudo}
-      exercicio(${listaNumeros[i]}, ${listaNumeros[i+1]});
-      `
-      
-      // Executa o teste
-      const resultado = eval(exec);
-
-      // Valida se acertou o teste
-      if(resultado === listaNumeros[i] + listaNumeros[i+1]){
-        acertosTotais++;
-        console.log("Acertou")
-      }
     }
-    
-    
-    var msg = `O seu código não está correto! Acertou um total de ${acertosTotais} dos testes`
-    if(acertosNecessarios === acertosTotais){
-      msg = `O seu código está correto! Acertou um total de ${acertosTotais} dos testes`
-    }
-    setConsoleMessages(msg)
 
   }
 
-  
-
-  const listaTemas = ['vs', 'vs-dark', 'hc-black', Amy, MonokaiBrightTheme, Monokai]
-  const handleThemeChange = (event) => {
-    if (event.target.value === 0) {
+  function handleThemeChange() {
+    console.log(selectTemas.options.select)
+    if (selectedTheme === 'vs') {
       monaco.editor.setTheme('vs');
-
-    } else if (event.target.value === 1) {
+    } else if (selectedTheme === 'vs-dark') {
       monaco.editor.setTheme('vs-dark');
-
-    } else if (event.target.value === 2) {
+    } else if (selectedTheme === 'hc-black') {
       monaco.editor.setTheme('hc-black');
-
     } else {
-      monaco.editor.defineTheme('meu-tema', listaTemas[event.target.value]);
+      monaco.editor.defineTheme('meu-tema', selectedTheme);
       monaco.editor.setTheme('meu-tema');
     }
-
-  };
-
- 
-  
-  const selecionarFase = (event) =>{
-    var faseSelecionada = event.target.value;
-    sessionStorage.setItem("faseSelecionada", faseSelecionada)
   }
 
+  const mudarFase = (event) => {
+    if (event === "voltar") {
+      if (sessionStorage.exercicioAtual - 1 < 0) {
+        setConsoleMessages("Você já está na primeira fase!");
+      } else {
+        setConsoleMessages("Voltando uma fase!");
+        sessionStorage.exercicioAtual--;
+        atualizarConteudo();
+      }
+    } else if (event === "avancar") {
+
+      if (sessionStorage.exercicioAtual >= sessionStorage.qtdExerciciosFase - 1) {
+        setConsoleMessages("Você já está na ultima fase!");
+      } else if(sessionStorage.exercicioAtual == sessionStorage.qtdExerciciosFaseConcluidos){
+        setConsoleMessages("Você deve concluir esse exercicio primeiro!")
+      } else {
+        setConsoleMessages("Avançando uma fase!");
+        sessionStorage.exercicioAtual++;
+        atualizarConteudo();
+      }
+
+    }
+  }
+
+  async function validarAntesDeSalvar(layout) {
+    setLayout(layout)
+    if (salvarComTimeOut.current) {
+      clearTimeout(salvarComTimeOut.current);
+    }
+
+    salvarComTimeOut.current = setTimeout(async () => {
+      await salvar(layout);
+      salvarComTimeOut.current = null;
+    }, 1000);
+  }
+
+  async function salvar(layout) {
+    setLayout(layout)
+    const { url, options } = SALVAR_NA_PILHA(sessionStorage.tokenBearer, layout)
+
+    const response = await fetch(url, options);
+    if (response.ok) {
+      console.log("salvo")
+    }
+  }
+
+  async function desfazer() {
+
+    const { url, options } = DESFAZER_PILHA(sessionStorage.tokenBearer)
+
+    const response = await fetch(url, options);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data)
+      setLayout(data);
+    } else {
+      setConsoleMessages("Não há o que desfazer")
+    }
+
+  }
+
+  async function refazer() {
+
+    const { url, options } = REFAZER_PILHA(sessionStorage.tokenBearer)
+
+    const response = await fetch(url, options);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data)
+      setLayout(data);
+    } else {
+      setConsoleMessages("Não há o que refazer")
+    }
+
+  }
 
   return (
-    <div>
-      <select id='selectTemas' onChange={handleThemeChange} >
-        <option value='0'>Visual Studio</option>
-        <option value='1'>Visual Studio Dark</option>
-        <option value='2'>High Contrast Black</option>
-        <option value='3'>Amy</option>
-        <option value='4'>MonokaiBrightTheme</option>
-        <option value='5'>Monokai</option>
-      </select>
-      <select id='selectFase' onChange={selecionarFase} >
-        <option value='1'>Soma</option>
-        <option value='2'>Subtração</option>
-        <option value='3'>Multiplicação</option>
-        <option value='4'>Divisão</option>
-      </select>
-      
-      <button className='botao' onClick={validar}>Verificar</button>
-      <button className='botao' onClick={handleSave}>Salvar</button>
-      <button className='botao' onClick={login}>Login</button>
-      <button className='botao' onClick={buscarFase}>Buscar fase</button>
-
+    <div className={classe}>
       <span className='monacoContainer'>
-
         <div className='monaco'>
+          <span className='titulo'><span>JS</span> JavaScript</span>
           <Monaco
-            height='100vh'
+            height='60vh'
             width='50vw'
             theme={theme}
             defaultLanguage='javascript'
-            value={conteudoMonaco}
-            onChange={(textoDigitado) => setConteudoMonaco(textoDigitado)}
-            onValidate={handleEditorValidation}
+            value={layout}
+            onChange={(e) => validarAntesDeSalvar(e)}
+          // onValidate={handleEditorValidation}
           />
         </div>
-
         <div id='console' className='console'>
-        {consoleMessages}
-      {/* Exibe mensagens de erro */}
-      {errorMessages.length > 0 && (
-        <div>
-          <h2>Mensagens de Erro:</h2>
-          <ul>
-            {errorMessages.map((message, index) => (
-              <li key={index}>{message}</li>
-            ))}
-          </ul>
+          {/* <TemasComprados handleThemeChange={handleThemeChange} /> */}
+          {/* <div> */}
+          {consoleMessages}
+          {/* Exibe mensagens de erro
+            {errorMessages.length > 0 && (
+              <div>
+                <h2>Mensagens de Erro:</h2>
+                <ul>
+                  {errorMessages.map((message, index) => (
+                    <li key={index}>{message}</li>
+                  ))}
+                </ul>
+              </div>
+            )}</div> */}
         </div>
-      )}
+
+        <div className='botoes'>
+      
+          <Link to="/roadmap">
+           <button className='botao'>RoadMap</button> 
+          </Link>
+          <button className='botao' onClick={desfazer}>Desfazer</button>
+          <button className='botao' onClick={refazer}>Refazer</button>
+          <button className='botao' onClick={() => { mudarFase("voltar") }}>Voltar</button>
+          <button className='botao' onClick={() => { mudarFase("avancar") }}>Proxima</button>
+          <button className='botao' id='validar' onClick={validar}>Verificar</button>
+
         </div>
       </span>
-
-
-
-
     </div>
   )
 }

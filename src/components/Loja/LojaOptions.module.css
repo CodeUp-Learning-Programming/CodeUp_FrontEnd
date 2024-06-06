@@ -1,0 +1,124 @@
+.bg{
+    background-color: #171717;
+    
+}
+
+.grid{
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 80px 0;
+    min-height: calc(100vh - 37px );
+    max-height: 70vh;
+}
+
+.navLoja{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(0,226,242,1) 0%, rgba(0,127,251,1) 100%);
+    border-image-slice: 1;
+    background-color: black;
+    padding: 20px;
+    
+}
+
+.navLoja h1{ 
+    font-size: 3rem;
+    color: white;
+}
+
+.navLoja nav{
+    color: #858585;
+    font-size: 1.25rem;
+    padding: 38px 180px 0 20px;
+}
+
+.gridCard{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    color: white;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    
+}
+
+.card{
+    padding: 20px;
+    text-align: center;
+    border: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(0,226,242,1) 0%, rgba(0,127,251,1) 100%);
+    border-image-slice: 1;
+    background-color: black;
+    cursor: pointer;
+}
+
+.card img:nth-child(1){
+    max-width: 110px;
+    border: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(0,226,242,1) 0%, rgba(0,127,251,1) 100%);
+    border-image-slice: 1;
+    background-color: black;
+    
+}
+
+.active{
+    color: white;
+}
+
+.preco{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    width: 100%;
+}
+
+.modalContainer{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.modal{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 15vh;
+    border: 1px solid;
+    border-image-source: linear-gradient(90deg, rgba(0,226,242,1) 0%, rgba(0,127,251,1) 100%);
+    border-image-slice: 1;
+    background-color: black;
+    padding: 40px;
+}
+
+.modal h1{
+    color: white;
+    padding: 15px 0 10px 0 ;
+    font-size: 1.2rem;
+}
+
+.precoModalTexto{
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+}
+
+.modal img{
+    max-width: 240px;
+}
+
+.precoModal{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+}
+
+.buttonEquipar{
+    max-width: 240px;
+}
