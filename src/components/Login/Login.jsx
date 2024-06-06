@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { USER_CADASTRO, USER_LOGIN } from "../../api";
 import logo from "../../assets/Codeup-big.png";
@@ -9,10 +10,12 @@ import { func } from "prop-types";
 import padrao from '../../assets/Loja/halloween.jpg'
 
 const Login = () => {
+  const { initialLoginCadastro } = useParams();
+  const initialLoginState = initialLoginCadastro === 'true'; 
   /* Login */
   const [email, setEmail] = React.useState("");
   const [senha, setSenha] = React.useState("");
-  const [loginCadastro, setLoginCadastro] = React.useState(false);
+  const [loginCadastro, setLoginCadastro] = React.useState(initialLoginState);
 
   /* Cadastro */
   const [nome, setNome] = React.useState("");
