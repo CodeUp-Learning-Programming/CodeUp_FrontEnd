@@ -1,5 +1,6 @@
-export const API_URL = "http://localhost:8080/api";
-
+//export const API_URL = "http://localhost:8080/api";
+const isHttps = window.location.protocol === "https:";
+const API_URL = isHttps ? "https://codeup.servehttp.com/api" : "http://52.44.103.17/api";
 
 export function USER_CADASTRO(body) {
     return {
