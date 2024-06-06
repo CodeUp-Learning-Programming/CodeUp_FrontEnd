@@ -1,0 +1,85 @@
+/* Header.module.css */
+
+.bg {
+    background-color: #3b4351;
+    color: #ffffff;
+    padding: 10px 0;
+  }
+  
+  /* .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  } */
+  
+  .logo {
+    width: 120px;
+  }
+  
+  .user-dropdown {
+    position: relative;
+  }
+  
+  .user-dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .avatar {
+    width: 40px;
+    /* border-radius: 50%; */
+    height: 40px;
+    border: solid 1.5px #5a5a5a;
+  }
+  
+  /* Header.module.css */
+
+.user-dropdown-container {
+    position: relative;
+  }
+  
+  .user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 5px); /* Posiciona o dropdown 5 pixels abaixo da foto do perfil */
+    right: 0;
+    background-color: #000000;
+    border: 1.5px solid #007FFB; /* Adicione a cor aqui */
+    border-image-source: linear-gradient(90deg, rgba(0, 226, 242, 1) 0%, rgba(0, 127, 251, 1) 100%);
+    border-image-slice: 1;
+    border-radius: 15px;
+    padding: 10px;
+    min-width: 130px;
+    z-index: 1000; /* Garante que o dropdown esteja acima do conteúdo do cabeçalho */
+  }
+  
+  
+  
+  .user-dropdown-menu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-dropdown-menu li {
+    margin-bottom: 10px;
+  }
+  
+  /* .user-dropdown-menu a {
+    text-decoration: none;
+    color: #333333;
+    font-size: 16px;
+  } */
+  
+  /* .user-dropdown-menu a:hover {
+    color: #007bff;
+  } */
+
+  .text-drop-box{
+    background: -webkit-linear-gradient(360deg, rgba(0, 226, 242, 1) 0%, rgba(0, 127, 251, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* font-weight: 600; */
+    /* font-size: 2rem; */
+  }
+  
+  
