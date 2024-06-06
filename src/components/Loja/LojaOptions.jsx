@@ -16,7 +16,7 @@ export const LojaOptions = () => {
         const response = await fetch(url, options);
         if (response.ok) {
             const data = await response.json();
-            console.log("Aqui está o os items da loja: " + data);
+            console.log("Aqui está o os items da loja: ", data);
             setLoja(data);
         }
     }
@@ -130,9 +130,10 @@ export const LojaOptions = () => {
 
                 <div className={style.gridCard}>
                     {loja.itensLoja?.map((itemLoja, index) => (
+                        itemLoja.tipoItem === "Foto de Perfil" && (
                         <div className={style.card} key={index} onClick={itemLoja.adquirido ? () => console.log("item já adquirido") : (event) => abrirModal(event, itemLoja)}>
                             <img src={itemLoja.fotoItem} alt={`${itemLoja.descricaoItem}`} />
-                            <p>{itemLoja.nomeItem}</p>
+                            <p className={style.nomeItem}>{itemLoja.nomeItem}</p>
                             <div className={style.preco} style={{ display: itemLoja.adquirido ? 'none' : 'flex' }}>
                                 <p>{itemLoja.precoItem}</p>
                                 <img src={moeda} alt="" />
@@ -143,6 +144,7 @@ export const LojaOptions = () => {
                                 </div>
                             </div>
                         </div>
+                        )
                     ))}
                 </div>
             </div>
