@@ -1,14 +1,12 @@
 // Header.js
 
-import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import logo from '../assets/Codeup.png'
 import styles from './Header.module.css'
 import coin from '../assets/moeda.svg'
-import padrao from '../assets/padrao.jpeg'
 import UserDropdownMenu from './Perfil/profile'
 
-const Header = () => {
+const Header = ({fotoUsuario, moedas}) => {
   const navigate = useNavigate()
   
   var materiaSelecionada = sessionStorage.materiaSelecionada ? sessionStorage.materiaSelecionada : "";
@@ -29,9 +27,9 @@ const Header = () => {
           <Link to={"/loja"}>
             <p className={styles.p}>Loja</p>
           </Link>
-          <p className={styles.p2}>{moeda} <img className={styles.moeda} src={coin} alt="Moeda"/></p>
+          <p className={styles.p2}>{moedas ?? sessionStorage.moedas} <img className={styles.moeda} src={coin} alt="Moeda"/></p>
           <div className={styles["user-dropdown-container"]}>
-          <UserDropdownMenu/>
+          <UserDropdownMenu fotoUsuario = {fotoUsuario ?? sessionStorage.fotoPerfil}/>
         </div>
         </nav>
       </div>

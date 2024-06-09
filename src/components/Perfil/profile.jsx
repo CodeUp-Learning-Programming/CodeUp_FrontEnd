@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './profile.css'
 
-function UserDropdownMenu() {
+function UserDropdownMenu({fotoUsuario} ) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -9,20 +9,20 @@ function UserDropdownMenu() {
   };
 
   const handleLogout = () => {
-    // Implemente a lógica para fazer logout do usuário aqui
+    sessionStorage.clear()
     console.log("Fazendo logout...");
   };
 
   return (
     <div className="user-dropdown">
       <button onClick={toggleMenu} className="user-dropdown-toggle">
-        <img src={sessionStorage.fotoPerfil}  className="avatar" />
+        <img src={fotoUsuario == "" ? sessionStorage.fotoPerfil : fotoUsuario}  className="avatar" />
       </button>
       {isOpen && (
         <div className="user-dropdown-menu">
           <ul>
             <li><a href="/perfil" className='text-drop-box'>Perfil</a></li>
-            <li><a href="/login" className='text-drop-box'>Sair</a></li>
+            <li><a href="/" className='text-drop-box'>Sair</a></li>
             {/* Adicione outras opções de menu aqui, se necessário */}
           </ul>
         </div>

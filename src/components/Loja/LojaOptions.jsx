@@ -6,7 +6,7 @@ import { BUSCAR_ITENS_LOJA, COMPRAR_ITEM_LOJA, EQUIPAR_ITEM_ADQUIRIDO, USER_ATUA
 import Button from '../Button';
 import { func } from 'prop-types';
 
-export const LojaOptions = () => {
+export const LojaOptions = ({atualizarFotoUsuario, atualizarMoedasUsuario}) => {
 
     const [loja, setLoja] = useState([]);
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -53,7 +53,7 @@ export const LojaOptions = () => {
             console.log("Item comprado com sucesso!")
             setMostrarModal(false);
             buscarConteudoLoja()
-
+            atualizarMoedasUsuario(data.moedas)
         }else{
             console.log("Moedas Insuficientes!")
 
@@ -68,6 +68,7 @@ export const LojaOptions = () => {
         const response = await fetch(url, options);
         if (response.ok) {
             sessionStorage.setItem('fotoPerfil', novaFoto);
+            atualizarFotoUsuario(novaFoto);
             console.log("foto alterada")
             console.log(response)
         }
@@ -138,9 +139,14 @@ export const LojaOptions = () => {
                                 <p>{itemLoja.precoItem}</p>
                                 <img src={moeda} alt="" />
                             </div>
-                            <div className={style.preco} style={{ display: itemLoja.adquirido ? 'flex' : 'none' }}>
+                            <div className={style.preco} style={{ display: itemLoja.adquirido && sessionStorage.fotoPerfil != itemLoja.fotoItem ? 'flex' : 'none' }}>
                                 <div className={style.buttonEquipar}>
                                     <Button type={true} value={"equipar"} texto={"Equipar"} setValue={() => equiparItem(itemLoja.fotoItem)} />
+                                </div>
+                            </div>
+                            <div className={style.preco} style={{ display: itemLoja.adquirido && sessionStorage.fotoPerfil == itemLoja.fotoItem ? 'flex' : 'none' }}>
+                                <div className={style.buttonEquipar}>
+                                    <Button type={true} value={"equipado"} texto={"Equipado"} />
                                 </div>
                             </div>
                         </div>
