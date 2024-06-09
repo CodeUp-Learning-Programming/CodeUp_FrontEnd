@@ -4,11 +4,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import TemasComprados from './TemasComprados';
 import { Link } from 'react-router-dom'
 
-import { VALIDAR_EXERCICIO, SALVAR_NA_PILHA, DESFAZER_PILHA, REFAZER_PILHA } from '../../api';
+import { VALIDAR_EXERCICIO} from '../../api';
 
 import './monaco.css';
-
-
 
 function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, atualizarConteudo }) {
   //const [data, setData] = useState([]);
@@ -29,6 +27,18 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
   //   // Atualiza o estado com as mensagens de erro
   //   setErrorMessages(errorMessages);
   // }
+
+
+  async function validarAntesDeSalvar(layout) {
+    setLayout(layout)
+    if (salvarComTimeOut.current) {
+      clearTimeout(salvarComTimeOut.current);
+    }
+
+    salvarComTimeOut.current = setTimeout(async () => {
+      salvarComTimeOut.current = null;
+    }, 1000);
+  }
 
   async function validar() {
     console.log(layout)
@@ -138,58 +148,6 @@ function MonacoEditor({ classe, layoutFuncao, xp, moeda, idExercicio, idFase, at
       }
 
     }
-  }
-
-  async function validarAntesDeSalvar(layout) {
-    setLayout(layout)
-    if (salvarComTimeOut.current) {
-      clearTimeout(salvarComTimeOut.current);
-    }
-
-    salvarComTimeOut.current = setTimeout(async () => {
-      await salvar(layout);
-      salvarComTimeOut.current = null;
-    }, 1000);
-  }
-
-  async function salvar(layout) {
-    setLayout(layout)
-    const { url, options } = SALVAR_NA_PILHA(sessionStorage.tokenBearer, layout)
-
-    const response = await fetch(url, options);
-    if (response.ok) {
-      console.log("salvo")
-    }
-  }
-
-  async function desfazer() {
-
-    const { url, options } = DESFAZER_PILHA(sessionStorage.tokenBearer)
-
-    const response = await fetch(url, options);
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data)
-      setLayout(data);
-    } else {
-      setConsoleMessages("Não há o que desfazer")
-    }
-
-  }
-
-  async function refazer() {
-
-    const { url, options } = REFAZER_PILHA(sessionStorage.tokenBearer)
-
-    const response = await fetch(url, options);
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data)
-      setLayout(data);
-    } else {
-      setConsoleMessages("Não há o que refazer")
-    }
-
   }
 
   return (
