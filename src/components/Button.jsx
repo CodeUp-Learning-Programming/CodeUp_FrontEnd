@@ -15,7 +15,7 @@ const Button = ({texto, value, setValue, type}) => {
     : type && value == "equipar"? 
     
     <button 
-    className={style.button + " " + style.buttonEquipar + " " + style.e}
+    className={style.button + " " + style.buttonEquipar + " "}
     onClick={() => {
       setValue()
     }}
