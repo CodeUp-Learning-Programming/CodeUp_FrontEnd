@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import style from './TopSideContainer.module.css';
 
 const TopSideContainer = ({ titulo, progresso, classe }) => {
-  
+
   useEffect(() => {
     const progressBar = document.querySelector(`.${style.barra}`);
     if (progressBar) {
@@ -10,8 +10,6 @@ const TopSideContainer = ({ titulo, progresso, classe }) => {
     }
   },[progresso]);
   
-
-
   return (
     <div className={style.borda + " " + classe}>
       <div className={style.titulo}>{titulo}</div>

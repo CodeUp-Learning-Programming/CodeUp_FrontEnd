@@ -44,7 +44,7 @@ export const LojaOptions = ({atualizarFotoUsuario, atualizarMoedasUsuario}) => {
         if (response.ok) {
             //atualizarInformacoes();
             const data = await response.json();
-            console.log(data)
+            console.log("dados recuperados ao comprar um item:",data)
             sessionStorage.setItem('nivel', data.nivel ?? 0);
             sessionStorage.setItem('moedas', data.moedas ?? 0);
             sessionStorage.setItem('xp', data.xp ?? 0);
