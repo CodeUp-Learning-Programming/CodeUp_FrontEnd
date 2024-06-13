@@ -28,3 +28,21 @@
     font-size: 1rem;
 
 }
+
+.buttonEquipado{
+    background: rgb(1, 169, 247);
+    border: 1px solid transparent;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 110px;
+    font-size: 1.0rem;
+    margin: 0 auto;
+
+}
+
+.buttonEquipado p{
+    background: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
